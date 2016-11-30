@@ -1,2 +1,32 @@
-<h3>Home Component</h3>
-<p>Welcome to Angular Seed</p>
+<div class="container-fluid">
+	<div *ngIf="chains.length == 0" class="row flex-items-xs-center">
+	  	<div class="col-xs-4 flex-xs-middle offset-md-4">
+		  <h2 class="display-2"><i class="fa fa-picture-o fa-10" aria-hidden="true"></i></h2>
+		  <h4 class="display-4">This dashboard is empty and this is sad :-(</h4>
+		  <h4 class="display-4">Let's launch your first chain !</h4>
+		  <button [routerLink]="['/new']" class="btn btn-outline-wechain" type="submit">CREATE NEW CHAIN</button>
+		</div>
+	</div>
+	<!-- <div *ngIf="chains.length != 0" class="card-deck-wrapper"> -->
+	  <div *ngIf="chains.length != 0" class="container-fluid">
+	    <div *ngFor='let chain of chains' class="card col-xs-3">
+	    	<div class="card-block text-xs-center">
+			    <h4 class="card-title">#{{chain.title}}</h4>
+			    <h6 class="card-subtitle text-muted">created on {{chain.created_at}}</h6>
+			</div>
+		      <img class="card-img img-fluid" [src]="'https://thumbnails.wechain.eu/'+chain.author.thumbnails[0]" alt="Card image cap">
+		      <!-- <div class="card-img-overlay">
+		      	<h4 class="card-title">Pictures to moderate</h4>
+			    <p class="card-text">
+				    <i class="fa fa-picture-o" aria-hidden="true"></i> &nbsp; {{chain.chainers.length}} &nbsp;
+				    <i class="fa fa-users" aria-hidden="true"></i> &nbsp; {{chain.chainers_count}}
+			    </p>
+			  </div> -->
+		      <div class="card-block text-xs-center">
+		        <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-video-camera" aria-hidden="true"></i> &nbsp; Broadcast Live</a>
+		        <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-user-plus" aria-hidden="true"></i> &nbsp; Invite More</a>
+		      </div>
+	    </div>
+	  </div>
+	<!-- </div> -->
+</div>

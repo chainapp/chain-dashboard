@@ -1,29 +1,19 @@
-<h3>
-  Angular 2 Seed
-</h3>
-<nav>
-	<a [routerLink]="['/']">
-    Home
+<nav class="navbar navbar-light bg-faded" style="background-color:#315A7B;">
+  <a class="navbar-brand" href="#">
+    <img src="/logo_green.png" height="38" alt="">
   </a>
-  |
-	<a [routerLink]="['/about']">
-    About
-  </a>
-  |
-	<a [routerLink]="['/github', 'angular']">
-    Github Repos
-  </a>
-  |
-	<a [routerLink]="['/contact']">
-    Contact Us
-  </a>
+  <form class="form-inline float-xs-right">
+    <input class="form-control" type="text" placeholder="Search in chains...">
+    <button [routerLink]="['/new']" class="btn btn-outline-wechain" type="submit">CREATE NEW CHAIN</button>
+  </form>
 </nav>
+
 
 <main>
 	<router-outlet></router-outlet>
 </main>
 
-
+<!-- 
 <footer>
   © 2016
-</footer>
+</footer> -->
