@@ -9,16 +9,30 @@ div.divider * {
 div.divider span.divider {
   width: 100%;
   flex-shrink: 1;
-  border-bottom: 1px solid black;
+  border-bottom: 2px solid white;
   margin: 5px
 }
 
 .badge {
-  height: 100px;
-  width: 100px;
+  height: 30px;
+  width: 30px;
+  font-size:1.2em;
   display: table-cell;
   text-align: center;
   vertical-align: middle;
   border-radius: 50%; /* may require vendor prefixes */
-  background: yellow;
+  background: #D3D3D3;
+  color:white;
+}
+
+.currentbadge {
+  height: 30px;
+  width: 30px;
+  font-size:1.2em;
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 50%; /* may require vendor prefixes */
+  background: #0BD380;
+  color:white;
 }

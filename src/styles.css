@@ -18,3 +18,27 @@
 
 .btn-outline-wechain.disabled:hover,.btn-outline-wechain:disabled:hover
 {border-color:#CCFAF4}
+
+.fixOverlayDiv{
+    position: relative;
+    width:100%; 
+    padding:0px;
+}
+
+.OverlayBottomText{
+    background-color: rgba(72,72,72,0.1);
+    bottom: 0;
+    color: #fff;
+    left: 0;
+    position: absolute;
+    width: 100%;
+}
+
+.OverlayTopText{
+    background-color: #0BD380;
+    top: 0;
+    color: #fff;
+    left: 0;
+    position: absolute;
+    width: 70%;
+}

@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="jumbotron">
 	<div *ngIf="chains.length == 0" class="row flex-items-xs-center">
 	  	<div class="col-xs-4 flex-xs-middle offset-md-4">
 		  <h2 class="display-2"><i class="fa fa-picture-o fa-10" aria-hidden="true"></i></h2>
@@ -14,7 +14,18 @@
 			    <h4 class="card-title">#{{chain.title}}</h4>
 			    <h6 class="card-subtitle text-muted">created on {{chain.created_at}}</h6>
 			</div>
-		      <img class="card-img img-fluid" [src]="'https://thumbnails.wechain.eu/'+chain.author.thumbnails[0]" alt="Card image cap">
+			  <div class="fixOverlayDiv">
+		      	<img class="img-fluid" [src]="'https://thumbnails.wechain.eu/'+chain.author.thumbnails[0]" alt="Card image cap" style="width:100%;height:auto;">
+		      	<div *ngIf="chains.length != 0" class="OverlayTopText">
+		      		&nbsp; <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+				    <i class="fa fa-thumbs-down" aria-hidden="true"></i> &nbsp;
+				    <!-- {{chain.moderate_waiting}} --> 12 pictures to moderate
+		      	</div>
+		      	<div class="OverlayBottomText">
+		      		&nbsp; <i class="fa fa-picture-o" aria-hidden="true"></i> &nbsp; {{chain.chainers.length+1}} &nbsp;
+				    <i class="fa fa-users" aria-hidden="true"></i> &nbsp; {{chain.chainers_count}}
+		      	</div>
+		      </div>
 		      <!-- <div class="card-img-overlay">
 		      	<h4 class="card-title">Pictures to moderate</h4>
 			    <p class="card-text">
@@ -23,10 +34,11 @@
 			    </p>
 			  </div> -->
 		      <div class="card-block text-xs-center">
-		        <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-video-camera" aria-hidden="true"></i> &nbsp; Broadcast Live</a>
+		        <a href="https://live.wechain.eu/{{chain._id}}" target="_blank" class="btn btn-danger btn-sm"><i class="fa fa-video-camera" aria-hidden="true"></i> &nbsp; Broadcast Live</a>
 		        <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-user-plus" aria-hidden="true"></i> &nbsp; Invite More</a>
 		      </div>
 	    </div>
 	  </div>
 	<!-- </div> -->
 </div>
+
