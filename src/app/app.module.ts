@@ -10,6 +10,7 @@ import { HttpModule } from '@angular/http';
 
 import { AboutComponent } from './about/about.component';
 import { HomeComponent } from './home/home.component';
+import { ChainComponent } from './chains/chain.component';
 import { NewComponent } from './new/new.component';
 import { RepoBrowserComponent } from './github/repo-browser/repo-browser.component';
 import { RepoListComponent } from './github/repo-list/repo-list.component';
@@ -28,7 +29,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     RepoDetailComponent,
     HomeComponent,
     ContactComponent,
-    NewComponent
+    NewComponent,
+    ChainComponent
   ],
   imports: [
     NgbModule.forRoot(),

@@ -1,0 +1,30 @@
+<div class="container-fluid" *ngIf="loaded">
+	<nav class="navbar navbar-light bg-faded full-width" style="background-color:#F5F5F5;">
+	  <a class="navbar-brand" [routerLink]="['/home']">
+	    <i class="fa fa-arrow-circle-left" aria-hidden="true" style="color:#D8D8D8;"></i>
+	  </a>	  	  
+	  <span class="navbar-text float-xs-left">
+	    <h5 class="display-5" style="color:#315A7B;">#{{chain.title}} &nbsp; &nbsp;</h5>
+	  </span>
+	  <span class="navbar-text float-xs-left text-muted">
+	    {{chain.chainers_count}} users | {{chain.chainers.length+1}} pictures | {{chain.likes.length}} likes | {{chain.comments.length}} comments
+	  </span>
+	  <form class="form-inline float-xs-right">
+	  	Live moderation
+	  	<input class="form-check-input" type="checkbox" [checked]="chain.isAdvertising" (click)="console.log('click')">
+	    <a href="https://live.wechain.eu/{{chain._id}}" target="_blank" class="btn btn-danger btn-sm"><i class="fa fa-video-camera" aria-hidden="true"></i> &nbsp; Broadcast Live</a>
+		<a href="#" class="btn btn-primary btn-sm"><i class="fa fa-user-plus" aria-hidden="true"></i> &nbsp; Invite More</a>
+		<button type="button" class='btn btn-secondary' data-toggle="popover" data-placement="bottom" data-content="Vivamus
+sagittis lacus vel augue laoreet rutrum faucibus." data-trigger="hover">
+		  <i class="fa fa-cog" aria-hidden="true"></i>
+		</button>
+	  </form>
+	</nav>
+	<div class="row">
+		<!-- <div class="card col-xs-2" *ngFor='let chainer of chain.chainers' [style.background-image]="'url(https://thumbnails.wechain.eu/'+chainer.thumbnails[0]+')'" style="background-size: cover; background-repeat: no-repeat;">
+		</div>  -->
+		<div *ngFor='let chainer of chain.chainers' class="col-xs-2 col-sm-4 col-md-6 col-lg-8">
+		  <img class="img-fluid"  src="https://thumbnails.wechain.eu/{{chainer.thumbnails[1]}}" alt="Card image cap">		  
+		</div>
+	</div>
+</div>

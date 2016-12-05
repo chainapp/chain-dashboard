@@ -10,6 +10,10 @@ export class ChainService {
     return this.makeRequest(`${start}/${end}`);
   }
 
+  getChain(chainId: string) {
+    return this.makeRequest(`${chainId}`);
+  }
+
   getReposForOrg(org: string) {
     return this.makeRequest(`orgs/${org}/repos`);
   }
@@ -22,7 +26,7 @@ export class ChainService {
     let params = new URLSearchParams();
     //params.set('per_page', '100');
 
-    let url = `https://backend.wechain.eu/v3/chains/${ path }`;
+    let url = `http://localhost:8080/v3/chains/${ path }`;
     return this.http.get(url)
       .map((res) => res.json());
   }
