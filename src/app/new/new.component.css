@@ -12,6 +12,20 @@ div.divider span.divider {
   border-bottom: 2px solid white;
   margin: 5px
 }
+div.currentdivider {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+div.currentdivider * {
+  flex-shrink: 0
+}
+div.currentdivider span.currentdivider {
+  width: 100%;
+  flex-shrink: 1;
+  border-bottom: 2px solid #0BD380;
+  margin: 5px
+}
 
 .badge {
   height: 30px;

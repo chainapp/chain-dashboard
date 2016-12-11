@@ -9,9 +9,18 @@ import { ChainService } from '../services/chain.service';
 })
 export class NewComponent {
 
-  constructor(private router: Router, private chain: ChainService) {
-  }
+	public steps = [true,false,false,false,false,false,false];
 
-  
+	constructor(private router: Router, private chain: ChainService) {
+	}
+
+  	next(i) {
+  		this.steps[i]=false
+	    this.steps[i+1]=true;
+	  }
+	  back(i) {
+  		this.steps[i]=false
+	    this.steps[i-1]=true;
+	  }
 
 }

@@ -9,19 +9,19 @@
 	</div>
 	<!-- <div *ngIf="chains.length != 0" class="card-deck-wrapper"> -->
 	  <div *ngIf="chains.length != 0" class="container-fluid">
-	    <div *ngFor='let chain of chains' class="card col-xs-3">
+	    <div *ngFor='let chain of chains' class="card col-xs-4">
 	    	<div class="card-block text-xs-center">
-			    <h4 class="card-title">#{{chain.title}}</h4>
+			    <h5 class="card-title display-5">#{{chain.title}}</h5>
 			    <h6 class="card-subtitle text-muted">created on {{chain.created_at}}</h6>
 			</div>
 			  <div class="fixOverlayDiv">
 		      	<a [routerLink]="['/chains/'+chain._id]" >
 		      		<img class="img-fluid" [src]="'https://thumbnails.wechain.eu/'+chain.author.thumbnails[0]" alt="Card image cap" style="width:100%;height:auto;">
 		      	</a>
-		      	<div *ngIf="chains.length != 0" class="OverlayTopText">
+		      	<div *ngIf="chain.isAdvertising" class="OverlayTopText">
 		      		&nbsp; <i class="fa fa-thumbs-up" aria-hidden="true"></i>
 				    <i class="fa fa-thumbs-down" aria-hidden="true"></i> &nbsp;
-				    <!-- {{chain.moderate_waiting}} --> 12 pictures to moderate
+				    {{chain.moderation_count}} pictures to moderate
 		      	</div>
 		      	<div class="OverlayBottomText">
 		      		&nbsp; <i class="fa fa-picture-o" aria-hidden="true"></i> &nbsp; {{chain.chainers.length+1}} &nbsp;

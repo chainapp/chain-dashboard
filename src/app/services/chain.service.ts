@@ -7,27 +7,44 @@ export class ChainService {
   constructor(private http: Http) {}
 
   getChains(start: number,end: number) {
-    return this.makeRequest(`${start}/${end}`);
+    return this.makeGetRequest(`${start}/${end}`);
   }
 
   getChain(chainId: string) {
-    return this.makeRequest(`${chainId}`);
+    return this.makeGetRequest(`${chainId}`);
   }
 
-  getReposForOrg(org: string) {
-    return this.makeRequest(`orgs/${org}/repos`);
+  getModeration(chainId: string) {
+    return this.makeGetRequest(`${chainId}/moderation`);
   }
 
-  getRepoForOrg(org: string, repo: string) {
-    return this.makeRequest(`repos/${org}/${repo}`);
+  toggleModeration(chainId: string) {
+    return this.makePutRequest(`${chainId}/toggleModeration`,{});
   }
 
-  private makeRequest(path: string) {
+  approve(chainId: string,chainerId: string) {
+    return this.makeGetRequest(`${chainId}/approve/${chainerId}`);
+  }
+
+  refuse(chainId: string,chainerId: string) {
+    return this.makeGetRequest(`${chainId}/refuse/${chainerId}`);
+  }
+
+  private makeGetRequest(path: string) {
     let params = new URLSearchParams();
     //params.set('per_page', '100');
 
     let url = `http://localhost:8080/v3/chains/${ path }`;
     return this.http.get(url)
+      .map((res) => res.json());
+  }
+
+  private makePutRequest(path: string, data: any) {
+    let params = new URLSearchParams();
+    //params.set('per_page', '100');
+
+    let url = `http://localhost:8080/v3/chains/${ path }`;
+    return this.http.put(url,data)
       .map((res) => res.json());
   }
 }
