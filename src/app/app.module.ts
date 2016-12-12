@@ -24,6 +24,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
+import {ToasterModule, ToasterService} from 'angular2-toaster/angular2-toaster';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
     HttpModule,
     RouterModule.forRoot(rootRouterConfig, { useHash: true }),
     ModalModule.forRoot(),
-    BootstrapModalModule
+    BootstrapModalModule,
+    ToasterModule
   ],
   providers: [
     GithubService,

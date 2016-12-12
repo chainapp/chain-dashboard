@@ -4,19 +4,22 @@ import {Observable} from 'rxjs/Observable';
 import {ActivatedRoute} from '@angular/router';
 import { Overlay } from 'angular2-modal';
 import { Modal } from 'angular2-modal/plugins/bootstrap';
+import {ToasterContainerComponent, ToasterService} from 'angular2-toaster/angular2-toaster';
 
 @Component({
   selector: 'chain',
   styleUrls: ['./chain.component.css'],
-  templateUrl: './chain.component.html',
+  templateUrl: './chain.component.html'
 })
 export class ChainComponent implements OnInit {
   chainId: string;
   public chain:any = {};
   public loaded:boolean = false;
+  private toasterService: ToasterService;
 
-  constructor(public chainService: ChainService, private route: ActivatedRoute, overlay: Overlay, vcRef: ViewContainerRef, public modal: Modal) {
-    overlay.defaultViewContainer = vcRef;
+  constructor(public chainService: ChainService, private route: ActivatedRoute, overlay: Overlay, vcRef: ViewContainerRef, public modal: Modal, toasterService: ToasterService) {
+     overlay.defaultViewContainer = vcRef;
+     this.toasterService = toasterService; 
   }
 
   ngOnInit() {
@@ -61,33 +64,105 @@ export class ChainComponent implements OnInit {
     })
   }
 
-  approve(chainerid:string){
-    this.modal.alert()
+  approve(chainer:any){
+    this.modal.confirm()
         .size('lg')
         .showClose(true)
-        .title('A simple Alert style modal window')
-        .body(`
-            <h4>Alert is a classic (title/body/footer) 1 button modal window that 
-            does not block.</h4>
-            <b>Configuration:</b>
-            <ul>
-                <li>Non blocking (click anywhere outside to dismiss)</li>
-                <li>Size large</li>
-                <li>Dismissed with default keyboard key (ESC)</li>
-                <li>Close wth button click</li>
-                <li>HTML content</li>
-            </ul>`)
-        .open();
-    this.chainService.approve(this.chain._id,chainerid)
-    .subscribe(_ => {
-      this.init(this.chain._id);
-    })
+        .title('Confirm picture approval')
+        .body("<h4>Are you sure you want to approve "+chainer.username+"'s picture ?</h4><img class='img-responsive img-fluid modal-wechain-image' src='http://pictures.wechain.eu/"+chainer.picture+"'>")
+        .okBtn('Approve picture')
+        .okBtnClass('btn btn-success')
+        .open()
+        .catch(err => alert("ERROR")) // catch error not related to the result (modal open...)
+        .then( (resultPromise) => {
+          resultPromise.result.then( (result) => {
+               this.chainService.approve(this.chain._id,chainer._id)
+              .subscribe(_ => {
+                this.init(this.chain._id);
+                this.toasterService.pop('success', 'Picture approved', 'Picture from '+chainer.username+' has been successfully approved');
+              })
+                 }, 
+             () => {} );
+         });
   }
 
-  refuse(chainerid:string){
-    this.chainService.refuse(this.chain._id,chainerid)
-    .subscribe(_ => {
-      this.init(this.chain._id);
-    })
+  refuse(chainer:any){
+    this.modal.confirm()
+        .size('lg')
+        .showClose(true)
+        .title('Confirm picture refusal')
+        .body("<h4>Are you sure you want to refuse "+chainer.username+"'s picture ?</h4><img class='img-fluid' src='http://pictures.wechain.eu/"+chainer.picture+"'>")
+        .okBtn('Refuse picture')
+        .okBtnClass('btn btn-danger')
+        .open()
+        .catch(err => alert("ERROR")) // catch error not related to the result (modal open...)
+        .then( (resultPromise) => {
+          resultPromise.result.then( (result) => {
+               this.chainService.refuse(this.chain._id,chainer._id)
+              .subscribe(_ => {
+                this.init(this.chain._id);
+                this.toasterService.pop('success', 'Picture refused', 'Picture from '+chainer.username+' has been successfully refused');
+              })
+                 }, 
+             () => {} );
+         });
+  }
+
+  see(chainer:any){
+    this.modal.confirm()
+        .size('lg')
+        .showClose(true)
+        .title('Picture from '+chainer.username)
+        .body("<img class='img-responsive img-fluid' src='http://pictures.wechain.eu/"+chainer.picture+"'>")
+        .okBtn('Delete picture')
+        .okBtnClass('btn btn-danger')
+        .open()
+        .catch(err => alert("ERROR")) // catch error not related to the result (modal open...)
+        .then( (resultPromise) => {
+          resultPromise.result.then( (result) => {
+               this.modal.confirm()
+                  .size('sm')
+                  .showClose(true)
+                  .title("Are you want to delete picture from "+chainer.username+" ?")
+                  .body("<p class='lead  text-xs-center col-xs-12'>This action cannot be undone</p>")
+                  .okBtn('Delete picture')
+                  .okBtnClass('btn btn-danger')
+                  .open()
+                  .catch(err => alert("ERROR")) // catch error not related to the result (modal open...)
+                  .then( (resultPromise) => {
+                    resultPromise.result.then( (result) => {
+                         this.chainService.deleteChainer(this.chain._id,chainer._id)
+                        .subscribe(_ => {
+                          this.init(this.chain._id);
+                          this.toasterService.pop('success', 'Picture approved', 'Picture from '+chainer.username+' has been successfully approved');
+                        })
+                           }, 
+                       () => {} );
+                   })
+                 }, 
+             () => {} );
+         });
+  }
+
+   delete(chainer:any){
+    this.modal.confirm()
+        .size('lg')
+        .showClose(true)
+        .title('Delete picture from '+chainer.username+' ?')
+        .body("<img class='img-responsive img-fluid' src='http://pictures.wechain.eu/"+chainer.picture+"'>")
+        .okBtn('Delete picture')
+        .okBtnClass('btn btn-danger')
+        .open()
+        .catch(err => alert("ERROR")) // catch error not related to the result (modal open...)
+        .then( (resultPromise) => {
+          resultPromise.result.then( (result) => {
+               this.chainService.deleteChainer(this.chain._id,chainer._id)
+              .subscribe(_ => {
+                this.init(this.chain._id);
+                this.toasterService.pop('success', 'Picture approved', 'Picture from '+chainer.username+' has been successfully approved');
+              })
+                 }, 
+             () => {} );
+         });
   }
 }

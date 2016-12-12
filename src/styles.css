@@ -131,25 +131,6 @@ wechain-input{
     position: absolute;
     width: 70%;
 }
-/*.OverlayTopText:after {
-    content: " ";
-    position: absolute;
-    display: block;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    z-index: -1;
-    
-    background: #0BD380;
-    border-bottom: 3px solid #2E8DEF;
-    border-right: 20px solid #2E8DEF;
-    
-    transform-origin: bottom left;
-    -ms-transform: skew(-50deg, 0deg);
-    -webkit-transform: skew(-50deg, 0deg);
-    transform: skew(-50deg, 0deg);
-}*/
 
 .posted-section {
     position: relative;
@@ -160,6 +141,8 @@ wechain-input{
     
     color: white;
     background: #3BA4F7;
+    margin-bottom: 20px;
+    margin-top: 20px;
     /*border-bottom: 3px solid #2E8DEF;*/
 }
 
@@ -192,6 +175,8 @@ wechain-input{
     
     color: white;
     background: #0BD380;
+    margin-bottom: 20px;
+    margin-top: 20px;
     /*border-bottom: 3px solid #2E8DEF;*/
 }
 
@@ -213,4 +198,26 @@ wechain-input{
     -ms-transform: skew(-15deg, 0deg);
     -webkit-transform: skew(-15deg, 0deg);
     transform: skew(-15deg, 0deg);
+}
+
+/* MODALS */
+modal-wechain-header {
+  color:#00EACB;
+  background-color: #315A7B;
+}
+
+modal-wechain {
+  color:#00EACB;
+  background-color: transparent;
+}
+
+modal-wechain-image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+modal-wechain-footer {
+  color:#00EACB;
+  background-color: #315A7B;
 }

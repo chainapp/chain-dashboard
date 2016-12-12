@@ -30,11 +30,15 @@ export class ChainService {
     return this.makeGetRequest(`${chainId}/refuse/${chainerId}`);
   }
 
+  deleteChainer(chainId: string,chainerId: string) {
+    return this.makeGetRequest(`${chainId}/chainer/${chainerId}`);
+  }
+
   private makeGetRequest(path: string) {
     let params = new URLSearchParams();
     //params.set('per_page', '100');
 
-    let url = `http://localhost:8080/v3/chains/${ path }`;
+    let url = `https://backend.wechain.eu/v3/chains/${ path }`;
     return this.http.get(url)
       .map((res) => res.json());
   }
@@ -43,8 +47,17 @@ export class ChainService {
     let params = new URLSearchParams();
     //params.set('per_page', '100');
 
-    let url = `http://localhost:8080/v3/chains/${ path }`;
+    let url = `https://backend.wechain.eu/v3/chains/${ path }`;
     return this.http.put(url,data)
+      .map((res) => res.json());
+  }
+
+  private makeDeleteRequest(path: string) {
+    let params = new URLSearchParams();
+    //params.set('per_page', '100');
+
+    let url = `https://backend.wechain.eu/v3/chains/${ path }`;
+    return this.http.delete(url)
       .map((res) => res.json());
   }
 }
