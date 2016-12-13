@@ -5,6 +5,8 @@ import {ActivatedRoute} from '@angular/router';
 import { Overlay } from 'angular2-modal';
 import { Modal } from 'angular2-modal/plugins/bootstrap';
 import {ToasterContainerComponent, ToasterService} from 'angular2-toaster/angular2-toaster';
+import {PopoverModule} from "ng2-popover";
+import { UiSwitchModule } from 'angular2-ui-switch'
 
 @Component({
   selector: 'chain',
@@ -58,7 +60,7 @@ export class ChainComponent implements OnInit {
   }
 
   toggleModeration(){
-    this.chainService.toggleModeration(this.chain.id)
+    this.chainService.toggleModeration(this.chain._id)
     .subscribe(chain => {
       this.chain.isAdvertising = chain.isAdvertising;
     })

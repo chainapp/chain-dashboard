@@ -3,8 +3,8 @@
 	  $('[data-toggle="popover"]').popover()
 	})
 </script>
-<div class="container-fluid" *ngIf="loaded">
-	<nav class="navbar navbar-light bg-faded full-width" style="background-color:#F5F5F5;">
+<!-- <div class="container-fluid" *ngIf="loaded"> -->
+	<nav *ngIf="loaded" class="navbar navbar-light bg-faded" style="background-color:#F5F5F5;">
 	  <a class="navbar-brand" [routerLink]="['/home']">
 	    <i class="fa fa-arrow-circle-left fa-4" aria-hidden="true" style="color:#D8D8D8;"></i>
 	  </a>	  	  
@@ -14,20 +14,52 @@
 	  <span class="navbar-text float-xs-left text-muted">
 	    {{chain.chainers_count}} users | {{chain.chainers.length+1}} pictures | {{chain.likes.length}} likes | {{chain.comments.length}} comments
 	  </span>
-	  <form class="form-inline float-xs-right">
-	  	Live moderation
-	  	<input class="form-check-input" type="checkbox" [checked]="chain.isAdvertising" (click)="toggleModeration();">
-	    <a href="https://live.wechain.eu/{{chain._id}}" target="_blank" class="btn btn-danger btn-sm"><i class="fa fa-video-camera" aria-hidden="true"></i> &nbsp; Broadcast Live</a>
-		<a href="#" class="btn btn-primary btn-sm"><i class="fa fa-user-plus" aria-hidden="true"></i> &nbsp; Invite More</a>
-		<!-- <button type="button" class='btn btn-secondary' data-toggle="popover" data-placement="bottom" data-content="Vivamus
-sagittis lacus vel augue laoreet rutrum faucibus." data-trigger="hover"> -->
-		  <i class="fa fa-cog" aria-hidden="true" role="button" data-toggle="popover" data-trigger="focus" title="Dismissible popover" data-content="And here's some amazing content. It's very engaging. Right?"></i>
-		 <!--  <a href="#" data-toggle="tooltip" title="Some tooltip text!">Hover over me</a> -->
-		<!-- </button> -->
-	  </form>
-
+		<span class="navbar-text float-xs-right text-muted" style="vertical-align:middle;">
+			<label for="moderationswitch">Live moderation</label>
+		  	<ui-switch id="moderationswitch" [checked]="chain.isAdvertising" (change)="toggleModeration();" size="small"></ui-switch>&nbsp;
+		  	<i class="fa fa-question-circle" [popover]="helpmoderation" [popoverOnHover]="true" style="font-size:1.5em; color:#606060;"></i>
+		  	&nbsp;		   
+		    <div class="btn-group btn-group-sm">
+			  <button type="button" class="btn btn-danger dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			    <i class="fa fa-video-camera" aria-hidden="true"></i> &nbsp; Broadcast Live
+			  </button>
+			  <div class="dropdown-menu">
+			    <a class="dropdown-item" (click)="cast()">Cast chain on screen &nbsp; <i class="fa fa-television" aria-hidden="true"></i></a>
+			    <a class="dropdown-item" href="https://live.wechain.eu/{{chain._id}}" target="_blank">Open live link in new tab &nbsp; <i class="fa fa-window-restore" aria-hidden="true"></i></a>
+			  </div>
+		  	</div>
+		  	 &nbsp;
+		  	 <i class="fa fa-question-circle" [popover]="helpbroadcast" [popoverOnHover]="true" style="font-size:1.5em; color:#606060;"></i>
+		  	 &nbsp;
+		  	<button type="button" class="btn btn-primary btn-sm navbar-text float-xs-right ">
+			    <i class="fa fa-user-plus" aria-hidden="true"></i> &nbsp; Invite More
+			</button>
+			&nbsp;
+		  	<i class="fa fa-cog fa-4" [popover]="actions" [popoverOnHover]="true" [popoverCloseOnMouseOutside]="true" style="font-size:1.5em; color:#606060;"></i>
+		    
+	    </span>
+	    <popover-content #actions 
+	            placement="bottom"
+	            [closeOnMouseOutside]="true">
+            <div class="row">
+	            <span class="col-sm-9">Delete chain &nbsp;</span><span class="col-sm-3"><i class="fa fa-trash" role="button" aria-hidden="true" style="font-size:1.5em; color:#606060;"></i> </span>
+	            <span class="col-sm-9">Show QR code &nbsp;</span><span class="col-sm-3"><ui-switch [checked]="chain.display_qrcode"  size="small"></ui-switch></span>
+	        </div>
+        </popover-content>
+        <popover-content #helpmoderation 
+	            placement="bottom">
+	        <p>
+	            Live moderation enables to manually validate each picture before it is posted to the whole chain.
+	        </p>
+	      </popover-content>
+		  <popover-content #helpbroadcast
+		            placement="bottom">
+	        <p>
+	            Live broadcast allows you to display your chain on a screen.
+	        </p>
+	      </popover-content>
 	</nav>
-</div>
+<!-- </div> -->
 <div class="container-fluid" *ngIf="loaded">
 	<div class="row">
 		<div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">

@@ -25,6 +25,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 import {ToasterModule, ToasterService} from 'angular2-toaster/angular2-toaster';
+import {PopoverModule} from "ng2-popover";
+import { UiSwitchModule } from 'angular2-ui-switch'
 
 @NgModule({
   declarations: [
@@ -47,7 +49,9 @@ import {ToasterModule, ToasterService} from 'angular2-toaster/angular2-toaster';
     RouterModule.forRoot(rootRouterConfig, { useHash: true }),
     ModalModule.forRoot(),
     BootstrapModalModule,
-    ToasterModule
+    ToasterModule,
+    PopoverModule,
+    UiSwitchModule
   ],
   providers: [
     GithubService,
