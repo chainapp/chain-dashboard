@@ -3,24 +3,23 @@
 	  $('[data-toggle="popover"]').popover()
 	})
 </script>
-<!-- <div class="container-fluid" *ngIf="loaded"> -->
 	<nav *ngIf="loaded" class="navbar navbar-light bg-faded" style="background-color:#F5F5F5;">
 	  <a class="navbar-brand" [routerLink]="['/home']">
-	    <i class="fa fa-arrow-circle-left fa-4" aria-hidden="true" style="color:#D8D8D8;"></i>
+	    <i class="fa fa-arrow-circle-left fa-4" aria-hidden="true" style="color:#D8D8D8"></i>
 	  </a>	  	  
-	  <span class="navbar-text float-xs-left">
-	    <h5 class="display-5" style="color:#315A7B;">#{{chain.title}} &nbsp; &nbsp;</h5>
+	  <span class="navbar-text float-xs-left" style="color:#315A7B;font-size:2em;">
+	    #{{chain.title}} &nbsp; &nbsp;
 	  </span>
-	  <span class="navbar-text float-xs-left text-muted">
+	  <span class="navbar-text float-xs-left text-muted" style="font-size:2em;">
 	    {{chain.chainers_count}} users | {{chain.chainers.length+1}} pictures | {{chain.likes.length}} likes | {{chain.comments.length}} comments
 	  </span>
-		<span class="navbar-text float-xs-right text-muted" style="vertical-align:middle;">
-			<label for="moderationswitch">Live moderation</label>
+	  <form class="form-inline float-xs-right">
+	    	<label for="moderationswitch" style="font-size:1.5em; color:#606060;">Live moderation</label>
 		  	<ui-switch id="moderationswitch" [checked]="chain.isAdvertising" (change)="toggleModeration();" size="small"></ui-switch>&nbsp;
-		  	<i class="fa fa-question-circle" [popover]="helpmoderation" [popoverOnHover]="true" style="font-size:1.5em; color:#606060;"></i>
+		  	<i class="fa fa-question-circle" [popover]="helpmoderation" [popoverOnHover]="true" style="font-size:1.5em; color:#606060;margin-top: 10px;"></i>
 		  	&nbsp;		   
-		    <div class="btn-group btn-group-sm">
-			  <button type="button" class="btn btn-danger dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		    <div class="btn-group">
+			  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			    <i class="fa fa-video-camera" aria-hidden="true"></i> &nbsp; Broadcast Live
 			  </button>
 			  <div class="dropdown-menu">
@@ -31,19 +30,18 @@
 		  	 &nbsp;
 		  	 <i class="fa fa-question-circle" [popover]="helpbroadcast" [popoverOnHover]="true" style="font-size:1.5em; color:#606060;"></i>
 		  	 &nbsp;
-		  	<button type="button" class="btn btn-primary btn-sm navbar-text float-xs-right ">
+		  	<button type="button" class="btn btn-primary">
 			    <i class="fa fa-user-plus" aria-hidden="true"></i> &nbsp; Invite More
 			</button>
 			&nbsp;
 		  	<i class="fa fa-cog fa-4" [popover]="actions" [popoverOnHover]="true" [popoverCloseOnMouseOutside]="true" style="font-size:1.5em; color:#606060;"></i>
-		    
-	    </span>
+	  </form>
 	    <popover-content #actions 
 	            placement="bottom"
 	            [closeOnMouseOutside]="true">
             <div class="row">
-	            <span class="col-sm-9">Delete chain &nbsp;</span><span class="col-sm-3"><i class="fa fa-trash" role="button" aria-hidden="true" style="font-size:1.5em; color:#606060;"></i> </span>
-	            <span class="col-sm-9">Show QR code &nbsp;</span><span class="col-sm-3"><ui-switch [checked]="chain.display_qrcode"  size="small"></ui-switch></span>
+	            <span class="col-sm-9">Delete chain</span><span class="col-sm-3"><i class="fa fa-trash" role="button" aria-hidden="true" style="font-size:1.5em; color:#606060;"></i> </span>
+	            <span class="col-sm-9">Show QR code</span><span class="col-sm-3"><ui-switch [checked]="chain.display_qrcode"  size="small"></ui-switch></span>
 	        </div>
         </popover-content>
         <popover-content #helpmoderation 
@@ -59,7 +57,6 @@
 	        </p>
 	      </popover-content>
 	</nav>
-<!-- </div> -->
 <div class="container-fluid" *ngIf="loaded">
 	<div class="row">
 		<div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
