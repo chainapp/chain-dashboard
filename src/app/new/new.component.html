@@ -36,7 +36,7 @@
 		</p>
 		<div class="input-group input-group-lg col-xs-4 offset-xs-4">
 		  <span class="input-group-addon" id="sizing-addon1">#</span>
-		  <input type="text" class="form-control form-control-lg wechain-input" placeholder="Title" aria-describedby="sizing-addon1">
+		  <input type="text" class="form-control form-control-lg wechain-input" placeholder="Title" aria-describedby="sizing-addon1" name="title" [(ngModel)]="chain.title" (keypress)="_keyPress($event)">
 		</div>
 		<button class="btn btn-lg pull-right col-xs-1 offset-xs-10"  type="button" (click)="next(0)">Next</button>
 	</div> 
@@ -65,7 +65,9 @@
 		<div class="col-xs-8 offset-xs-2" style="border:3px dashed #979797;text-align:center;padding-top:3em;padding-bottom:3em;">
 			<h4 class="display-5 text-xs-center col-xs-12" style="text-align:center;"><i class="fa fa-cloud-upload fa-4" aria-hidden="true"></i></h4>
 			<h4 class="display-5 text-xs-center col-xs-12" style="text-align:center;">Drag &amp; drop pic here</h4>
-			<input role="button" class="btn btn-info btn-lg" type="file"/>
+			<input role="button" class="btn btn-info btn-lg" type="file" (change)="fileChangeListener($event)"/><br>
+			<img-cropper *ngIf="hasImage" class="col-xs-6" #cropper [image]="data" [settings]="cropperSettings"></img-cropper>
+        	<img *ngIf="data.image" class="col-xs-6" [src]="data.image">
 		</div>
 		<h3 class="display-6 text-xs-center col-xs-12" style="color:#315A7B;text-align:center;"><b>OR</b></h3>
 		<div class="col-xs-8 offset-xs-2" style="border:3px dashed #979797;text-align:center;padding-top:3em;padding-bottom:3em;">
@@ -98,28 +100,28 @@
 		<h1 class="display-3 text-xs-center col-xs-12" style="color:#315A7B;">Planned <b>event</b></h1>
 		<div class="radio col-xs-6 offset-xs-3">
             <label style="font-size: 2em;color:#315A7B;">
-                <input type="radio" name="o5" value="" checked>
+                <input type="radio" name="o5" value="Party" [(ngModel)]="chain.event_type">
                 <span class="cr" style="color:#3BA4F7;"><i class="cr-icon fa fa-circle" style="color:#3BA4F7;"></i></span>
                 Party
             </label>
         </div>
         <div class="radio col-xs-6 offset-xs-3">
             <label style="font-size: 2em;color:#315A7B;">
-                <input type="radio" name="o5" value="" checked>
+                <input type="radio" name="o5" value="Events" [(ngModel)]="chain.event_type">
                 <span class="cr" style="color:#3BA4F7;"><i class="cr-icon fa fa-circle" style="color:#3BA4F7;"></i></span>
                 Events (Seminar, meeting, celebration, ...)
             </label>
         </div>
         <div class="radio col-xs-6 offset-xs-3">
             <label style="font-size: 2em;color:#315A7B;">
-                <input type="radio" name="o5" value="" checked>
+                <input type="radio" name="o5" value="Wedding" [(ngModel)]="chain.event_type">
                 <span class="cr" style="color:#3BA4F7;"><i class="cr-icon fa fa-circle" style="color:#3BA4F7;"></i></span>
                 Wedding
             </label>
         </div>
         <div class="radio col-xs-6 offset-xs-3">
             <label style="font-size: 2em;color:#315A7B;">
-                <input type="radio" name="o5" value="" checked>
+                <input type="radio" name="o5" value="Team Building" [(ngModel)]="chain.event_type">
                 <span class="cr" style="color:#3BA4F7;"><i class="cr-icon fa fa-circle" style="color:#3BA4F7;"></i></span>
                 Team Building
             </label>
@@ -127,7 +129,7 @@
 		<form class="form-inline col-xs-12 text-xs-center">
 		  <div class="form-group">
 		    <label for="exampleInputName2">Other</label>
-		    <input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe">
+		    <input type="text" class="form-control" id="exampleInputName2" name="event_type" placeholder="Jane Doe" [(ngModel)]="chain.event_type">
 		  </div>
 		</form>
 		<br/>
@@ -158,7 +160,7 @@
 		</p>
 		<div class="radio col-xs-6 offset-xs-3">
             <label style="font-size: 2em;color:#315A7B;">
-                <input type="radio" name="o5" value="" checked>
+                <input type="radio" name="type" value="PUBLIC" [(ngModel)]="chain.type">
                 <span class="cr" style="color:#3BA4F7;"><i class="cr-icon fa fa-circle" style="color:#3BA4F7;"></i></span>
                 Everyone
                 <p class="lead text-xs-left col-xs-12" style="color:#315A7B;">
@@ -168,22 +170,26 @@
         </div>
         <div class="radio col-xs-6 offset-xs-3">
             <label style="font-size: 2em;color:#315A7B;">
-                <input type="radio" name="o5" value="">
+                <input type="radio" name="type" value="PRIVATE" [(ngModel)]="chain.type">
                 <span class="cr" style="color:#3BA4F7;"><i class="cr-icon fa fa-circle" style="color:#3BA4F7;"></i></span>
-                My guests and only them
+                My guests only
                 <p class="lead text-xs-left col-xs-12" style="color:#315A7B;">
-				   This chain will remain invisible for everyone not invite
+				   Allow your guests to invite theirs ?
 				</p>
-            </label>
-        </div>
-        <div class="radio col-xs-6 offset-xs-3">
-            <label style="font-size: 2em;color:#315A7B;">
-                <input type="radio" name="o5" value="">
-                <span class="cr" style="color:#3BA4F7;"><i class="cr-icon fa fa-circle" style="color:#3BA4F7;"></i></span>
-                My guests and their guests
-                <p class="lead text-xs-left col-xs-12" style="color:#315A7B;">
-				   My guests are able to invite people for funny chain reactions
-				</p>
+				<div class="radio col-xs-9 offset-xs-">
+		            <label style="font-size: 1em;color:#315A7B;">
+		                <input type="radio" name="restricted" [value]="false" [(ngModel)]="chain.restricted">
+		                <span class="cr" style="color:#3BA4F7;"><i class="cr-icon fa fa-circle" style="color:#3BA4F7;"></i></span>
+		                Yes		               
+		            </label>
+		        </div>
+		        <div class="radio col-xs-9 offset-xs-">
+		            <label style="font-size: 1em;color:#315A7B;">
+		                <input type="radio" name="restricted" [value]="true" [(ngModel)]="chain.restricted">
+		                <span class="cr" style="color:#3BA4F7;"><i class="cr-icon fa fa-circle" style="color:#3BA4F7;"></i></span>
+		                No		               
+		            </label>
+		        </div>
             </label>
         </div>
         <div class="col-xs-12">
@@ -260,7 +266,7 @@
 		</p>
 		<div class="radio col-xs-6 offset-xs-3">
             <label style="font-size: 2em;color:#315A7B;">
-                <input type="radio" name="o5" value="">
+                <input type="radio" name="o5" [value]="null" [(ngModel)]="chain.isAdvertising">
                 <span class="cr" style="color:#3BA4F7;"><i class="cr-icon fa fa-circle" style="color:#3BA4F7;"></i></span>
                 Automatic
                 <p class="lead text-xs-left col-xs-12" style="color:#315A7B;">
@@ -270,21 +276,21 @@
         </div>
         <div class="radio col-xs-6 offset-xs-3">
             <label style="font-size: 2em;color:#315A7B;">
-                <input type="radio" name="o5" value="">
+                <input type="radio" name="o5" [value]="true" [(ngModel)]="chain.isAdvertising">
                 <span class="cr" style="color:#3BA4F7;"><i class="cr-icon fa fa-circle" style="color:#3BA4F7;"></i></span>
                 Manual
                 <p class="lead text-xs-left col-xs-12" style="color:#315A7B;">
-				   this moderation requires the continue presence of a person beside the screen. <b>No picture will be posted without having been previously validated</b>
+				   This moderation requires the continue presence of a person beside the screen. <b>No picture will be posted without having been previously validated</b>
 				</p>
             </label>
         </div>
         <div class="radio col-xs-6 offset-xs-3">
             <label style="font-size: 2em;color:#315A7B;">
-                <input type="radio" name="o5" value="" checked>
+                <input type="radio" name="o5" [value]="false" [(ngModel)]="chain.isAdvertising">
                 <span class="cr" style="color:#3BA4F7;"><i class="cr-icon fa fa-circle" style="color:#3BA4F7;"></i></span>
                 Without moderation
                 <p class="lead text-xs-left col-xs-12" style="color:#315A7B;">
-				   Each picture is posted withou any check
+				   Each picture is posted without any check
 				</p>
             </label>
         </div>
@@ -294,4 +300,43 @@
 		<button class="btn btn-lg pull-left col-xs-1"  type="button" (click)="back(5)">Previous</button>
 		<button class="btn btn-lg btn-primary pull-right col-xs-1 offset-xs-10"  type="button" (click)="next(5)">Launch !</button>
 	</div> 
+	<div class="row" *ngIf="steps[6]">
+	  	<div class="col-xs-10 offset-xs-1">
+		  	<div class="divider">
+
+			  <div class="currentbadge">1</div>
+
+			  <span class="divider" style="border-color:#0BD380;"></span>
+
+			  <div class="currentbadge">2</div>
+
+			  <span class="divider" style="border-color:#0BD380;"></span>
+
+			  <div class="currentbadge">3</div>
+
+			  <span class="divider" style="border-color:#0BD380;"></span>
+
+			  <div class="currentbadge">4</div>
+
+			  <span class="divider" style="border-color:#0BD380;"></span>
+
+			  <div class="currentbadge">5</div>
+
+			  <span class="divider" style="border-color:#0BD380;"></span>
+
+			  <div class="currentbadge">6</div>
+
+			  <span class="divider" style="border-color:#0BD380;"></span>
+
+			  <div class="currentbadge">7</div>
+			</div>
+		</div>
+		<h1 class="display-3 text-xs-center col-xs-12" style="color:#315A7B;"><b>Congrats !</b></h1>
+		<p class="lead  text-xs-center col-xs-12" style="color:#315A7B;">
+		  Chain <b style="color:#3BA4F7;">#{{chain.title}}</b> has been launched
+		</p>
+		<div class="col-xs-12 text-xs-center">
+			<button class="btn btn-lg btn-success"  type="button" (click)="next(0)">SEE MY CHAIN</button>
+		</div>
+	</div>
 </div>

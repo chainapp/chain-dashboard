@@ -18,7 +18,7 @@ import { RepoDetailComponent } from './github/repo-detail/repo-detail.component'
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { ContactComponent } from './contact/contact.component';
 
-
+import {ImageCropperComponent, CropperSettings} from 'ng2-img-cropper';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
@@ -32,13 +32,14 @@ import { UiSwitchModule } from 'angular2-ui-switch'
   declarations: [
     AppComponent,
     AboutComponent,
+    ChainComponent,
+    ContactComponent,
+    HomeComponent,
+    ImageCropperComponent,
+    NewComponent,
     RepoBrowserComponent,
     RepoListComponent,
-    RepoDetailComponent,
-    HomeComponent,
-    ContactComponent,
-    NewComponent,
-    ChainComponent
+    RepoDetailComponent
   ],
   imports: [
     NgbModule.forRoot(),
