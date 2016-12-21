@@ -1,0 +1,29 @@
+<div class="container col-xs-6 offset-xs-3">
+  	<ul class="nav nav-pills">
+	  <li class="nav-item">
+	    <a class="nav-link active" href="#">Login</a>
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-link" href="#">Signup</a>
+	  </li>
+	</ul>
+	<form class="col-xs-12">
+		I am
+		<div class="radio col-xs-6">
+            <label style="font-size: 2em;color:#315A7B;">
+                <input type="radio" name="o5" value="organization" [(ngModel)]="chain.event_type">
+                <span class="cr" style="color:#3BA4F7;"><i class="cr-icon fa fa-circle" style="color:#3BA4F7;"></i></span>
+                An organization
+                <small>(Company, Association, Intitution, ...)</small>
+            </label>
+        </div>
+		<div class="radio col-xs-6">
+            <label style="font-size: 2em;color:#315A7B;">
+                <input type="radio" name="o5" value="Events" [(ngModel)]="chain.event_type">
+                <span class="cr" style="color:#3BA4F7;"><i class="cr-icon fa fa-circle" style="color:#3BA4F7;"></i></span>
+                A private individual
+            </label>
+        </div>
+
+	</form>
+</div>
