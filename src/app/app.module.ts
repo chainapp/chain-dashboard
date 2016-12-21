@@ -28,6 +28,8 @@ import {ToasterModule, ToasterService} from 'angular2-toaster/angular2-toaster';
 import {PopoverModule} from "ng2-popover";
 import { UiSwitchModule } from 'angular2-ui-switch'
 
+import { Angular2TokenService, A2tUiModule } from 'angular2-token';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,6 +45,7 @@ import { UiSwitchModule } from 'angular2-ui-switch'
   ],
   imports: [
     NgbModule.forRoot(),
+    A2tUiModule,
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
@@ -55,6 +58,7 @@ import { UiSwitchModule } from 'angular2-ui-switch'
     UiSwitchModule
   ],
   providers: [
+    Angular2TokenService,
     GithubService,
     ChainService 
   ],

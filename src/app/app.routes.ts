@@ -8,11 +8,12 @@ import { RepoBrowserComponent } from './github/repo-browser/repo-browser.compone
 import { RepoListComponent } from './github/repo-list/repo-list.component';
 import { RepoDetailComponent } from './github/repo-detail/repo-detail.component';
 import { ContactComponent } from './contact/contact.component';
+import { Angular2TokenService } from 'angular2-token';
 
 export const rootRouterConfig: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent },
-  { path: 'new', component: NewComponent },
+  { path: 'restricted', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent, canActivate: [Angular2TokenService] },
+  { path: 'new', component: NewComponent, canActivate: [Angular2TokenService] },
   { path: 'about', component: AboutComponent },
   { path: 'chains/:chainId', component: ChainComponent},
   { path: 'github', component: RepoBrowserComponent,
