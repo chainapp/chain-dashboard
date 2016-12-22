@@ -18,6 +18,7 @@ import { RepoDetailComponent } from './github/repo-detail/repo-detail.component'
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { ContactComponent } from './contact/contact.component';
 import { SignupComponent } from './signup/signup.component';
+import { LoginComponent } from './login/login.component';
 
 import {ImageCropperComponent, CropperSettings} from 'ng2-img-cropper';
 
@@ -31,6 +32,8 @@ import { UiSwitchModule } from 'angular2-ui-switch'
 
 import { Angular2TokenService, A2tUiModule } from 'angular2-token';
 
+import {FacebookService, FacebookLoginResponse} from 'ng2-facebook-sdk';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,6 +42,7 @@ import { Angular2TokenService, A2tUiModule } from 'angular2-token';
     ContactComponent,
     HomeComponent,
     ImageCropperComponent,
+    LoginComponent,
     NewComponent,
     RepoBrowserComponent,
     RepoListComponent,
@@ -61,6 +65,7 @@ import { Angular2TokenService, A2tUiModule } from 'angular2-token';
   ],
   providers: [
     Angular2TokenService,
+    FacebookService,
     GithubService,
     ChainService 
   ],

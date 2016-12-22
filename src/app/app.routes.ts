@@ -9,6 +9,7 @@ import { RepoListComponent } from './github/repo-list/repo-list.component';
 import { RepoDetailComponent } from './github/repo-detail/repo-detail.component';
 import { ContactComponent } from './contact/contact.component';
 import { SignupComponent } from './signup/signup.component';
+import { LoginComponent } from './login/login.component';
 import { Angular2TokenService } from 'angular2-token';
 
 export const rootRouterConfig: Routes = [
@@ -18,6 +19,7 @@ export const rootRouterConfig: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'chains/:chainId', component: ChainComponent},
   { path: 'signup', component: SignupComponent},
+  { path: 'login', component: LoginComponent},
   { path: 'github', component: RepoBrowserComponent,
     children: [
       { path: '', component: RepoListComponent },

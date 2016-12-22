@@ -9,7 +9,7 @@ div.divider * {
 div.divider span.divider {
   width: 100%;
   flex-shrink: 1;
-  border-bottom: 2px solid white;
+  border-bottom: 2px solid #315A7B;
   margin: 5px
 }
 div.currentdivider {
@@ -34,9 +34,9 @@ div.currentdivider span.currentdivider {
   display: table-cell;
   text-align: center;
   vertical-align: middle;
-  border-radius: 50%; /* may require vendor prefixes */
-  background: #D3D3D3;
-  color:white;
+  /*border-radius: 50%; 
+  background: #D3D3D3;*/
+  color:#315A7B;
 }
 
 .currentbadge {
@@ -109,3 +109,26 @@ div.currentdivider span.currentdivider {
 .radio label input[type="radio"]:disabled + .cr {
     opacity: .5;
 }
+
+/*BUTTONS*/
+.btn-facebook
+{color:white;background-image:none;background-color:#3b5998;border-color:#3b5998}
+
+.btn-facebook:hover
+{color:white;background-color:#6d84b4;border-color:#6d84b4}
+
+.btn-facebook.focus,.btn-facebook:focus
+{color:white;background-color:#00EACB;border-color:#3b5998}
+
+.btn-facebook.active,.btn-facebook:active,.open>.btn-facebook.dropdown-toggle
+{color:white;background-color:#3b5998;border-color:#3b5998}
+
+
+.btn-wechain
+{color:white;background-image:none;background-color:#00EACB;border-color:#00EACB}
+
+.btn-wechain:hover
+{color:white;background-color:#00D2B6;border-color:#00D2B6}
+
+.btn-wechain.focus,.btn-wechain:focus
+{color:white;background-color:#00D2B6;border-color:#00D2B6}
