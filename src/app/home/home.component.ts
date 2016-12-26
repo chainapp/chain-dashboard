@@ -9,6 +9,7 @@ import {ChainService} from '../services/chain.service';
 })
 export class HomeComponent {
 	public chains:any = [];
+
 	
 	constructor(private router: Router, private chain: ChainService) {
 	}
@@ -19,7 +20,17 @@ export class HomeComponent {
 	    	console.log(chains)
             this.chains = chains;
           });
-	  }
+	 }
+
+	 loadMore(){
+	 	this.chain.getChains(this.chains.length,this.chains.length+10)
+	    .subscribe(chains => {
+	    	console.log(chains)
+            for ( var i = 0 ; i < chains.length ; i++){
+            	this.chains.push(chains[i])
+            }
+          });
+	 }
 
 	
 }

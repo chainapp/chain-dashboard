@@ -1,12 +1,15 @@
-import {Component} from '@angular/core';
+import {Component, ViewContainerRef} from '@angular/core';
 import { Angular2TokenService } from 'angular2-token';
+import { AuthService } from './services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app',
   templateUrl: './app.component.html',
 })
 export class AppComponent {
-	constructor(private _tokenService: Angular2TokenService) {
+	loggedIn: boolean = false;
+	constructor(private _tokenService: Angular2TokenService, private authService: AuthService) {
 	    this._tokenService.init({
 	        apiPath:                    'https://backend.wechain.eu/',
 
@@ -41,5 +44,8 @@ export class AppComponent {
 	            }
 	        }
 	    });
+	    this.loggedIn = authService.isLoggedIn();
 	}
+
+
 }

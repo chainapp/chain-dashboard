@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Http, URLSearchParams } from '@angular/http';
+import { Http, URLSearchParams, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
+import { AuthService } from './auth.service';
+
 
 @Injectable()
 export class ChainService {
-  constructor(private http: Http) {}
+  constructor(private http: Http, private authService: AuthService) {}
 
   getChains(start: number,end: number) {
     return this.makeGetRequest(`${start}/${end}`);
@@ -35,12 +37,15 @@ export class ChainService {
   }
 
   private makeGetRequest(path: string) {
-    let params = new URLSearchParams();
-    //params.set('per_page', '100');
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('x-jwt-token', this.authService.token());
 
-    let url = `https://backend.wechain.eu/v3/chains/${ path }`;
-    return this.http.get(url)
-      .map((res) => res.json());
+    let url = `https://backend.wechain.eu/dashboard/chains/${ path }`;
+    return this.http.get(url,{
+      withCredentials: true,
+      headers
+    }).map((res) => res.json());
   }
 
   private makePutRequest(path: string, data: any) {

@@ -4,6 +4,7 @@ import { rootRouterConfig } from './app.routes';
 import { AppComponent } from './app.component';
 import { GithubService } from './github/shared/github.service';
 import { ChainService } from './services/chain.service';
+import { AuthService } from './services/auth.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
@@ -67,7 +68,8 @@ import {FacebookService, FacebookLoginResponse} from 'ng2-facebook-sdk';
     Angular2TokenService,
     FacebookService,
     GithubService,
-    ChainService 
+    ChainService,
+    AuthService 
   ],
   bootstrap: [ AppComponent ]
 })

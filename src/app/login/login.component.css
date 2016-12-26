@@ -110,6 +110,23 @@ div.currentdivider span.currentdivider {
     opacity: .5;
 }
 
+.nav-wechain{
+  color:#315A7B;
+  padding-bottom: 0.5em;
+  border-bottom: 2px solid transparent;
+  text-align: center;
+  text-decoration: none;
+  font-size: 1.5em;
+}
+
+.nav-wechain-active{
+  border-bottom: 2px solid #3BA4F7;
+  padding-bottom: 0.5em;
+  text-align: center;
+  text-decoration: none;
+  font-size: 1.5em;
+}
+
 /*BUTTONS*/
 .btn-facebook
 {color:white;background-image:none;background-color:#3b5998;border-color:#3b5998}
@@ -123,6 +140,7 @@ div.currentdivider span.currentdivider {
 .btn-facebook.active,.btn-facebook:active,.open>.btn-facebook.dropdown-toggle
 {color:white;background-color:#3b5998;border-color:#3b5998}
 
+
 .btn-wechain
 {color:white;background-image:none;background-color:#00EACB;border-color:#00EACB}
 
@@ -131,3 +149,6 @@ div.currentdivider span.currentdivider {
 
 .btn-wechain.focus,.btn-wechain:focus
 {color:white;background-color:#00D2B6;border-color:#00D2B6}
+
+.btn-wechain.disabled,.btn-wechain:disabled
+{color:white;background-color:gray;border-color:#00D2B6}
