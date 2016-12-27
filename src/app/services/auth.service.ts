@@ -5,20 +5,23 @@ import { Angular2TokenService } from 'angular2-token';
 
 @Injectable()
 export class AuthService {
-  user: any = null;
+  user: any = {};
   loggedIn: boolean = false;
 
   constructor(private http: Http, private _tokenService: Angular2TokenService) {}
 
   signup(data: any) {
     return this.http
-      .post('http://localhost:8080/auth/dashboard/signup',data)
+      .post('https://backend.wechain.eu/auth/dashboard/signup',data)
       .map(res => res.json())
       .map((res) => {
-        if (res.success) {         
+      console.log(res)
+        if (res._id && res._id != null) {       
+        console.log("in status 201")  
           this.loggedIn = true;
           this.user = res;
         }else{
+        console.log("not in right status")
           this.loggedIn = false;
           this.user = null;
         }
@@ -29,10 +32,11 @@ export class AuthService {
 
   login(data: any) {
     return this.http
-      .post('http://localhost:8080/auth/dashboard/login',data)
+      .post('https://backend.wechain.eu/auth/dashboard/login',data)
       .map(res => res.json())
       .map((res) => {
-        if (res.success) {         
+
+        if (res._id && res._id != null) {         
           this.loggedIn = true;
           this.user = res;
         }else{
@@ -48,7 +52,7 @@ export class AuthService {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('x-jwt-token', this.user.jwt_token);
-    this._tokenService.get('http://localhost:8080/dashboard/session/valid',{
+    this._tokenService.get('https://backend.wechain.eu/dashboard/session/valid',{
       withCredentials: true,
       headers
     }).map(res => res.json());
@@ -58,39 +62,36 @@ export class AuthService {
     return this.user.jwt_token;
   }
 
-  confirmLogin(user) {
-    this.user = user;
-    this.loggedIn = true;
-  }
-
   isLoggedIn() {
     return this.loggedIn;
   }
 
-  getChain(chainId: string) {
-    return this.makeGetRequest(`${chainId}`);
+  getUser() {
+    return this.user;
   }
 
-  getModeration(chainId: string) {
-    return this.makeGetRequest(`${chainId}/moderation`);
+  setProfilePic(file) {
+    let headers = new Headers();
+    headers.append('x-jwt-token', this.user.jwt_token);
+    const formData = new FormData();
+    formData.append("profilePicture", file);
+    return this.http
+      .post('https://backend.wechain.eu/dashboard/profilePicture',formData,{
+        withCredentials: true,
+        headers
+      })
+      .map(res => res.json())
+      .map((res) => {
+
+        if (res.status && res.status == "OK") {         
+          this.user.profilePicture = res.profilePicture;
+        }
+
+        return res;
+      });
   }
 
-  toggleModeration(chainId: string) {
-    return this.makePutRequest(`${chainId}/toggleModeration`,{});
-  }
-
-  approve(chainId: string,chainerId: string) {
-    return this.makeGetRequest(`${chainId}/approve/${chainerId}`);
-  }
-
-  refuse(chainId: string,chainerId: string) {
-    return this.makeGetRequest(`${chainId}/refuse/${chainerId}`);
-  }
-
-  deleteChainer(chainId: string,chainerId: string) {
-    return this.makeGetRequest(`${chainId}/chainer/${chainerId}`);
-  }
-
+  
   private makeGetRequest(path: string) {
     let params = new URLSearchParams();
     //params.set('per_page', '100');

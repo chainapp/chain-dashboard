@@ -3,8 +3,9 @@
     <img src="/logo_green.png" height="38" alt="">
   </a>
   <form class="form-inline float-xs-right">
-    <input class="form-control" type="text" placeholder="Search in chains..." *ngIf="authService.isLoggedIn">
-    <button [routerLink]="['/new']" class="btn btn-outline-wechain" type="submit" *ngIf="authService.isLoggedIn">CREATE NEW CHAIN</button>
+    <input class="form-control" type="text" placeholder="Search in chains..." *ngIf="authService.isLoggedIn()">
+    <button [routerLink]="['/new']" class="btn btn-outline-wechain" type="submit" *ngIf="authService.isLoggedIn()">CREATE NEW CHAIN</button>
+    <img [src]="authService.getUser().profilePicture || 'https://s3-eu-west-1.amazonaws.com/chainappbucket-logos/profile.png'" height="38" alt="" *ngIf="authService.isLoggedIn()">
   </form>
 </nav>
 

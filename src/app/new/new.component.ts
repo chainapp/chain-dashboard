@@ -27,13 +27,9 @@ export class NewComponent {
 
 	constructor(private router: Router, private chainService: ChainService) {
 		this.cropperSettings = new CropperSettings();
-        //this.cropperSettings.width = 320;
-        //this.cropperSettings.height = 320;
         this.cropperSettings.noFileInput = true;
         this.cropperSettings.croppedWidth =640;
         this.cropperSettings.croppedHeight = 640;
-        //this.cropperSettings.canvasWidth = 640;
-        //this.cropperSettings.canvasHeight = 640;
 
         this.data = {};
 	}

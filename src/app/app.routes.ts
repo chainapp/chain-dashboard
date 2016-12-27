@@ -11,25 +11,15 @@ import { ContactComponent } from './contact/contact.component';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 import { Angular2TokenService } from 'angular2-token';
+import { AuthGuard } from './services/auth-guard.service';
 
 export const rootRouterConfig: Routes = [
-  { path: 'restricted', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent },
-  { path: 'new', component: NewComponent },
-  { path: 'about', component: AboutComponent },
-  { path: 'chains/:chainId', component: ChainComponent},
+  { path: '', redirectTo: 'home', pathMatch: 'full', canActivate: [AuthGuard] },
+  { path: 'restricted', redirectTo: 'home', pathMatch: 'full', canActivate: [AuthGuard] },
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'new', component: NewComponent, canActivate: [AuthGuard] },
+  { path: 'chains/:chainId', component: ChainComponent, canActivate: [AuthGuard]},
   { path: 'signup', component: SignupComponent},
-  { path: 'login', component: LoginComponent},
-  { path: 'github', component: RepoBrowserComponent,
-    children: [
-      { path: '', component: RepoListComponent },
-      { path: ':org', component: RepoListComponent,
-        children: [
-          { path: '', component: RepoDetailComponent },
-          { path: ':repo', component: RepoDetailComponent }
-        ]
-      }]
-  },
-  { path: 'contact', component: ContactComponent }
+  { path: 'login', component: LoginComponent}
 ];
 

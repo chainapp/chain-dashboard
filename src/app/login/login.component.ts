@@ -40,7 +40,6 @@ export class LoginComponent {
 		this.authService.login(data).subscribe(
 	        res => {
 	          console.log(res);
-	          this.authService.confirmLogin(res);
 	          console.log(this.authService.isLoggedIn());
 	          this.toasterService.pop('success', 'Login successful', 'Hello '+res.username+', welcome back on WeChain !');
 	          this.router.navigate(['/home']);

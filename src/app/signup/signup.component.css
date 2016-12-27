@@ -28,8 +28,6 @@ div.currentdivider span.currentdivider {
 }
 
 .badge {
-  height: 30px;
-  width: 30px;
   font-size:1.2em;
   display: table-cell;
   text-align: center;

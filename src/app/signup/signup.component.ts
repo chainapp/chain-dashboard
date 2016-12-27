@@ -1,4 +1,4 @@
-import { Component, ViewChild  } from '@angular/core';
+import { Component, ViewChild, ViewContainerRef  } from '@angular/core';
 import { Router } from '@angular/router';
 import { ChainService } from '../services/chain.service';
 import { AuthService } from '../services/auth.service';
@@ -7,6 +7,8 @@ import {FacebookService, FacebookLoginResponse} from 'ng2-facebook-sdk';
 import { Angular2TokenService, A2tUiModule } from 'angular2-token';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import {ToasterContainerComponent, ToasterService} from 'angular2-toaster/angular2-toaster';
+import { Overlay } from 'angular2-modal';
+import { Modal } from 'angular2-modal/plugins/bootstrap';
 
 @Component({
   selector: 'signup',
@@ -25,10 +27,43 @@ export class SignupComponent {
 	   confirmpassword: new FormControl('',Validators.required)
 	},Validators.compose([this.passwordMatchValidator,this.orgaOrPersonValidator]));
 	private toasterService: ToasterService;
+	data: any;
+    cropperSettings: CropperSettings;
+    @ViewChild('cropper', undefined) 
+	cropper:ImageCropperComponent;
+	hasImage: boolean = false;
+	file:File = null;
+
 	
 
-	constructor(private router: Router, private _tokenService: Angular2TokenService, fb: FormBuilder, private authService: AuthService, toasterService: ToasterService) {
+	constructor(private router: Router, private _tokenService: Angular2TokenService, fb: FormBuilder, private authService: AuthService, toasterService: ToasterService, overlay: Overlay, vcRef: ViewContainerRef, public modal: Modal) {
+	    overlay.defaultViewContainer = vcRef;
 	    this._tokenService.init();
+	    this.toasterService = toasterService;
+	    this.cropperSettings = new CropperSettings();
+        this.cropperSettings.noFileInput = true;
+        this.cropperSettings.croppedWidth = 320;
+        this.cropperSettings.croppedHeight = 320;
+        this.cropperSettings.width = 100;
+        this.cropperSettings.height = 100;
+        this.cropperSettings.canvasWidth = 200;
+        this.cropperSettings.canvasHeight = 200;
+        this.data = {};
+	}
+
+	fileChangeListener($event) {
+		this.hasImage = true;
+	    var image:any = new Image();
+	    this.file = $event.target.files[0];
+	    var myReader:FileReader = new FileReader();
+	    var that = this;
+	    myReader.onloadend = function (loadEvent:any) {
+	        image.src = loadEvent.target.result;
+	        that.cropper.setImage(image);
+	    };
+
+	    myReader.readAsDataURL(this.file);
+	    console.log(myReader)
 	}
 
 
@@ -36,8 +71,15 @@ export class SignupComponent {
 		this.authService.signup(data).subscribe(
 	        res => {
 	          console.log(res);
-	          this.toasterService.pop('success', 'Welcome !', 'Welcome on WeChain '+res.username+' !');
-	          this.router.navigate(['/home']);
+	          this.authService.setProfilePic(this.file).subscribe(
+	          	res => {
+	          		this.toasterService.pop('success', 'Welcome !', 'Welcome on WeChain '+res.username+' !');          
+	          		this.router.navigate(['/home']);
+	          	},
+	          	err => {
+
+	          	})
+	          
 	        },
 	        err => {
 	        	var message = JSON.parse(err._body).message
