@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import { Router } from '@angular/router';
 import {ChainService} from '../services/chain.service';
+import {AuthService} from '../services/auth.service';
 
 @Component({
   selector: 'home',
@@ -11,11 +12,11 @@ export class HomeComponent {
 	public chains:any = [];
 
 	
-	constructor(private router: Router, private chain: ChainService) {
+	constructor(private router: Router, private chain: ChainService, private authService: AuthService) {
 	}
 
 	ngOnInit() {
-	    this.chain.getChains(0,10)
+	    this.chain.getChains(0,10, this.authService.token())
 	    .subscribe(chains => {
 	    	console.log(chains)
             this.chains = chains;
@@ -23,7 +24,7 @@ export class HomeComponent {
 	 }
 
 	 loadMore(){
-	 	this.chain.getChains(this.chains.length,this.chains.length+10)
+	 	this.chain.getChains(this.chains.length,this.chains.length+10, this.authService.token())
 	    .subscribe(chains => {
 	    	console.log(chains)
             for ( var i = 0 ; i < chains.length ; i++){

@@ -12,7 +12,7 @@ export class AuthService {
 
   signup(data: any) {
     return this.http
-      .post('https://backend.wechain.eu/auth/dashboard/signup',data)
+      .post('http://localhost:8080/auth/dashboard/signup',data)
       .map(res => res.json())
       .map((res) => {
       console.log(res)
@@ -32,7 +32,7 @@ export class AuthService {
 
   login(data: any) {
     return this.http
-      .post('https://backend.wechain.eu/auth/dashboard/login',data)
+      .post('http://localhost:8080/auth/dashboard/login',data)
       .map(res => res.json())
       .map((res) => {
 
@@ -52,7 +52,7 @@ export class AuthService {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('x-jwt-token', this.user.jwt_token);
-    this._tokenService.get('https://backend.wechain.eu/dashboard/session/valid',{
+    this._tokenService.get('http://localhost:8080/dashboard/session/valid',{
       withCredentials: true,
       headers
     }).map(res => res.json());
