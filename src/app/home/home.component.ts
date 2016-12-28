@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import {ChainService} from '../services/chain.service';
 import {AuthService} from '../services/auth.service';
 
+
 @Component({
   selector: 'home',
   styleUrls: ['./home.component.css'],
@@ -16,6 +17,7 @@ export class HomeComponent {
 	}
 
 	ngOnInit() {
+		 this.authService.valid();
 	    this.chain.getChains(0,10, this.authService.token())
 	    .subscribe(chains => {
 	    	console.log(chains)

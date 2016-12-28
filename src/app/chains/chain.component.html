@@ -4,13 +4,13 @@
 	})
 </script>
 	<nav *ngIf="loaded" class="navbar navbar-light bg-faded" style="background-color:#F5F5F5;">
-	  <a class="navbar-brand" [routerLink]="['/home']">
+	  <a class="navbar-brand" [routerLink]="['/home']" style="font-size:1.5em;">
 	    <i class="fa fa-arrow-circle-left fa-4" aria-hidden="true" style="color:#D8D8D8"></i>
 	  </a>	  	  
-	  <span class="navbar-text float-xs-left" style="color:#315A7B;font-size:2em;">
+	  <span class="navbar-text float-xs-left" style="color:#315A7B;font-size:1.5em;">
 	    #{{chain.title}} &nbsp; &nbsp;
 	  </span>
-	  <span class="navbar-text float-xs-left text-muted" style="font-size:2em;">
+	  <span class="navbar-text float-xs-left text-muted" style="font-size:1.5em;">
 	    {{chain.chainers_count}} users | {{chain.chainers.length+1}} pictures | {{chain.likes.length}} likes | {{chain.comments.length}} comments
 	  </span>
 	  <form class="form-inline float-xs-right">

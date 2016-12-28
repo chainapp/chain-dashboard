@@ -8,7 +8,9 @@ export class AuthService {
   user: any = {};
   loggedIn: boolean = false;
 
-  constructor(private http: Http, private _tokenService: Angular2TokenService) {}
+  constructor(private http: Http, private _tokenService: Angular2TokenService) {
+
+  }
 
   signup(data: any) {
     return this.http
@@ -39,9 +41,13 @@ export class AuthService {
         if (res._id && res._id != null) {         
           this.loggedIn = true;
           this.user = res;
+          sessionStorage.setItem("user", JSON.stringify(this.user));
+          sessionStorage.setItem("loggedIn",true.toString());
         }else{
           this.loggedIn = false;
           this.user = null;
+          sessionStorage.removeItem("user");
+          sessionStorage.setItem("loggedIn",false.toString());
         }
 
         return res;
@@ -51,19 +57,28 @@ export class AuthService {
   valid() {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    headers.append('x-jwt-token', this.user.jwt_token);
-    this._tokenService.get('http://localhost:8080/dashboard/session/valid',{
+    headers.append('x-jwt-token', JSON.parse(sessionStorage.getItem("user")).jwt_token);
+    return this.http
+    .get('http://localhost:8080/auth/dashboard/validate',{
       withCredentials: true,
       headers
-    }).map(res => res.json());
+    }).map(res => res.json())
+    .map((res) => {
+      console.log(res);
+        if (!res.valid){
+          sessionStorage.removeItem("user");
+          sessionStorage.setItem("loggedIn",false.toString());
+        }
+        return res;
+      });
   }
 
   token() {
-    return this.user.jwt_token;
+    return JSON.parse(sessionStorage.getItem("user")).jwt_token;
   }
 
   isLoggedIn() {
-    return this.loggedIn;
+    return (sessionStorage.getItem("loggedIn") === 'true');
   }
 
   getUser() {
@@ -72,7 +87,7 @@ export class AuthService {
 
   setProfilePic(file) {
     let headers = new Headers();
-    headers.append('x-jwt-token', this.user.jwt_token);
+    headers.append('x-jwt-token', JSON.parse(sessionStorage.getItem("user")).jwt_token);
     const formData = new FormData();
     formData.append("profilePicture", file);
     return this.http

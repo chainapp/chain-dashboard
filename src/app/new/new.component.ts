@@ -1,7 +1,9 @@
 import { Component, ViewChild  } from '@angular/core';
 import { Router } from '@angular/router';
 import { ChainService } from '../services/chain.service';
+import { AuthService } from '../services/auth.service';
 import {ImageCropperComponent, CropperSettings} from 'ng2-img-cropper';
+import {ToasterContainerComponent, ToasterService} from 'angular2-toaster/angular2-toaster';
 
 @Component({
   selector: 'new',
@@ -10,7 +12,7 @@ import {ImageCropperComponent, CropperSettings} from 'ng2-img-cropper';
 })
 export class NewComponent {
 	chain: any = {
-		origin: "dashboard",
+		chain_origin: "dashboard",
 		title: null,
 		type: "PUBLIC",
 		event_type: "Party",
@@ -22,22 +24,24 @@ export class NewComponent {
     @ViewChild('cropper', undefined) 
 	cropper:ImageCropperComponent;
 	hasImage: boolean = false;
+	file:File = null;
 
 	public steps = [true,false,false,false,false,false,false];
 
-	constructor(private router: Router, private chainService: ChainService) {
+	constructor(private router: Router, private chainService: ChainService, private authService: AuthService,private toasterService: ToasterService) {
 		this.cropperSettings = new CropperSettings();
         this.cropperSettings.noFileInput = true;
         this.cropperSettings.croppedWidth =640;
         this.cropperSettings.croppedHeight = 640;
 
         this.data = {};
+        this.toasterService = toasterService; 
 	}
 
 	fileChangeListener($event) {
 		this.hasImage = true;
 	    var image:any = new Image();
-	    var file:File = $event.target.files[0];
+	    this.file = $event.target.files[0];
 	    var myReader:FileReader = new FileReader();
 	    var that = this;
 	    myReader.onloadend = function (loadEvent:any) {
@@ -45,7 +49,7 @@ export class NewComponent {
 	        that.cropper.setImage(image);
 	    };
 
-	    myReader.readAsDataURL(file);
+	    myReader.readAsDataURL(this.file);
 	}
 
 
@@ -53,13 +57,26 @@ export class NewComponent {
   		this.steps[i]=false
 	    this.steps[i+1]=true;
 	    if (i == 5){
-	    	console.log(this.chain)
+	    	console.log(this.chain);
+	    	this.createChain();
 	    }
 	  }
 	  back(i) {
   		this.steps[i]=false
 	    this.steps[i-1]=true;
 	  }
+
+	createChain(){
+		this.chainService.createChain(this.chain,this.file,this.authService.token()).subscribe(
+	        res => {
+	          this.chain._id = res._id;
+	        },
+	        err => {
+	        	//var message = JSON.parse(err._body).message
+	            this.toasterService.pop('error', 'Error', 'Error occured during chain creation. Please try again.');
+	        }
+	    );
+	}
 
 	  _keyPress(event: any) {
 	    const pattern = /[ ]/;

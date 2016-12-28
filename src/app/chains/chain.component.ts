@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 import {ChainService} from '../services/chain.service';
+import {AuthService} from '../services/auth.service';
 import {Observable} from 'rxjs/Observable';
 import {ActivatedRoute} from '@angular/router';
 import { Overlay } from 'angular2-modal';
@@ -19,12 +20,13 @@ export class ChainComponent implements OnInit {
   public loaded:boolean = false;
   private toasterService: ToasterService;
 
-  constructor(public chainService: ChainService, private route: ActivatedRoute, overlay: Overlay, vcRef: ViewContainerRef, public modal: Modal, toasterService: ToasterService) {
+  constructor(public chainService: ChainService, private route: ActivatedRoute, overlay: Overlay, vcRef: ViewContainerRef, public modal: Modal, toasterService: ToasterService, private authService: AuthService) {
      overlay.defaultViewContainer = vcRef;
      this.toasterService = toasterService; 
   }
 
   ngOnInit() {
+    this.authService.valid();
     this.route.params.subscribe(params => {
       this.chainId = params['chainId'];
       if (this.chainId) {
@@ -39,6 +41,7 @@ export class ChainComponent implements OnInit {
           console.log(chain)
           this.loaded = true;
           this.chain = chain;
+          this.chain.chainers.push(this.chain.author);
           this.chain.moderation = [];
           if (this.chain.isAdvertising && chain.moderation_count > 0){
             this.chainService.getModeration(this.chainId)

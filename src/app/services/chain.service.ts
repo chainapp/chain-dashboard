@@ -50,7 +50,7 @@ export class ChainService {
     let headers = new Headers();
     headers.append('x-jwt-token', token);
     headers.append('title', data.title);
-    headers.append('origin', data.origin);
+    headers.append('chain_origin', data.chain_origin);
     headers.append('event_type', data.event_type);
     headers.append('isAdvertising', data.isAdvertising);
     headers.append('restricted', data.restricted);
