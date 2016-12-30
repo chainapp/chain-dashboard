@@ -1,8 +1,8 @@
-import { Component, ViewChild  } from '@angular/core';
+import { Component, ViewChild, ElementRef  } from '@angular/core';
 import { Router } from '@angular/router';
 import { ChainService } from '../services/chain.service';
 import { AuthService } from '../services/auth.service';
-import {ImageCropperComponent, CropperSettings} from 'ng2-img-cropper';
+import {ImageCropperComponent, CropperSettings, Bounds} from 'ng2-img-cropper';
 import {ToasterContainerComponent, ToasterService} from 'angular2-toaster/angular2-toaster';
 
 @Component({
@@ -28,7 +28,7 @@ export class NewComponent {
 
 	public steps = [true,false,false,false,false,false,false];
 
-	constructor(private router: Router, private chainService: ChainService, private authService: AuthService,private toasterService: ToasterService) {
+	constructor(private router: Router, private chainService: ChainService, private authService: AuthService,private toasterService: ToasterService, private element: ElementRef) {
 		this.cropperSettings = new CropperSettings();
         this.cropperSettings.noFileInput = true;
         this.cropperSettings.croppedWidth =640;
@@ -67,6 +67,9 @@ export class NewComponent {
 	  }
 
 	createChain(){
+	 console.log(this.data)
+	 var croppedImage = this.element.nativeElement.querySelector('#croppedImage');
+
 		this.chainService.createChain(this.chain,this.file,this.authService.token()).subscribe(
 	        res => {
 	          this.chain._id = res._id;

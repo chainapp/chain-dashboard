@@ -67,7 +67,7 @@
 			<h4 class="display-5 text-xs-center col-xs-12" style="text-align:center;">Drag &amp; drop pic here</h4>
 			<input role="button" class="btn btn-info btn-lg" type="file" (change)="fileChangeListener($event)"/><br>
 			<img-cropper *ngIf="hasImage" class="col-xs-6" #cropper [image]="data" [settings]="cropperSettings"></img-cropper>
-        	<img *ngIf="data.image" class="col-xs-6" [src]="data.image">
+        	<img *ngIf="data.image" id="croppedImage" class="col-xs-6" [src]="data.image">
 		</div>
 		<h3 class="display-6 text-xs-center col-xs-12" style="color:#315A7B;text-align:center;"><b>OR</b></h3>
 		<div class="col-xs-8 offset-xs-2" style="border:3px dashed #979797;text-align:center;padding-top:3em;padding-bottom:3em;">
@@ -336,7 +336,7 @@
 		  Chain <b style="color:#3BA4F7;">#{{chain.title}}</b> has been launched
 		</p>
 		<div class="col-xs-12 text-xs-center">
-			<button class="btn btn-lg btn-success"  type="button" (click)="next(0)">SEE MY CHAIN</button>
+			<button class="btn btn-lg btn-success"  type="button" [routerLink]="['/chains/'+chain._id]">SEE MY CHAIN</button>
 		</div>
 	</div>
 </div>

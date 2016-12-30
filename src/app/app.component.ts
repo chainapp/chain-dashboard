@@ -1,4 +1,4 @@
-import {Component, ViewContainerRef} from '@angular/core';
+import {Component, ViewContainerRef, Output, EventEmitter} from '@angular/core';
 import { Angular2TokenService } from 'angular2-token';
 import { AuthService } from './services/auth.service';
 import { Router } from '@angular/router';
@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
 	loggedIn: boolean = false;
+	searchstring: any = null;
+	@Output() search: EventEmitter<any> = new EventEmitter();
 	constructor(private _tokenService: Angular2TokenService, private authService: AuthService) {
 	    this._tokenService.init({
 	        apiPath:                    'https://backend.wechain.eu/',
@@ -45,6 +47,11 @@ export class AppComponent {
 	        }
 	    });
 	    this.loggedIn = authService.isLoggedIn();
+	}
+
+	emit(){
+		this.search.emit(this.searchstring);
+		console.log("emitting "+this.searchstring)
 	}
 
 

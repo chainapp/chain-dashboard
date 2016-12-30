@@ -100,3 +100,53 @@
 	</div>
 </div>
 <toaster-container></toaster-container>
+<modal #approvalModal>
+    <modal-header>
+        <h4 class="modal-title">Confirm picture approval</h4>
+    </modal-header>
+    <modal-body>
+        Are you sure you want to approve the following picture from {{selectedChainer.username}} ?
+        <img src="https://pictures.wechain.eu/{{selectedChainer.picture}}" class="img-fluid">
+    </modal-body>
+    <modal-footer>
+        <button type="button" class="btn btn-default" data-dismiss="approvalModal" (click)="approveCanceled(selectedChainer);">No</button>
+        <button type="button" class="btn btn-primary" (click)="approveConfirmed(selectedChainer);">Yes, approve</button>
+    </modal-footer>
+</modal>
+<modal #refusalModal>
+    <modal-header>
+        <h4 class="modal-title">Confirm picture refusal</h4>
+    </modal-header>
+    <modal-body>
+        Are you sure you want to refuse the following picture from {{selectedChainer.username}} ?
+        <img src="https://pictures.wechain.eu/{{selectedChainer.picture}}" class="img-fluid">
+    </modal-body>
+    <modal-footer>
+        <button type="button" class="btn btn-default" data-dismiss="refusalModal" (click)="refuseCanceled(selectedChainer);">No</button>
+        <button type="button" class="btn btn-primary" (click)="refuseConfirmed(selectedChainer);">Yes, refuse</button>
+    </modal-footer>
+</modal>
+<modal #displayModal>
+    <modal-header>
+        <h4 class="modal-title">Picture from {{selectedChainer.username}}</h4>
+    </modal-header>
+    <modal-body>
+        <img src="https://pictures.wechain.eu/{{selectedChainer.picture}}" class="img-fluid">
+    </modal-body>
+    <modal-footer>
+        <button type="button" class="btn btn-default" data-dismiss="displayModal" (click)="displayModal.dismiss();">Close</button>
+        <button type="button" class="btn btn-danger" (click)="deleteConfirmed(selectedChainer);">Delete</button>
+    </modal-footer>
+</modal>
+<modal #deleteModal>
+    <modal-header>
+        <h4 class="modal-title">Delete picture from {{selectedChainer.username}} ?</h4>
+    </modal-header>
+    <modal-body>
+        <img src="https://pictures.wechain.eu/{{selectedChainer.picture}}" class="img-fluid">
+    </modal-body>
+    <modal-footer>
+        <button type="button" class="btn btn-default" data-dismiss="deleteModal" (click)="deleteModal.dismiss();">No, keep</button>
+        <button type="button" class="btn btn-danger" (click)="deleteConfirmed(selectedChainer);">Yes, delete</button>
+    </modal-footer>
+</modal>

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import { Router } from '@angular/router';
 import {ChainService} from '../services/chain.service';
 import {AuthService} from '../services/auth.service';
@@ -11,6 +11,8 @@ import {AuthService} from '../services/auth.service';
 })
 export class HomeComponent {
 	public chains:any = [];
+	@Input() 
+	model: any;
 
 	
 	constructor(private router: Router, private chain: ChainService, private authService: AuthService) {
@@ -34,6 +36,10 @@ export class HomeComponent {
             }
           });
 	 }
+
+	 private search(searchstring: any): void {
+        console.log("received "+searchstring)
+    }
 
 	
 }

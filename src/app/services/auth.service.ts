@@ -14,7 +14,7 @@ export class AuthService {
 
   signup(data: any) {
     return this.http
-      .post('http://localhost:8080/auth/dashboard/signup',data)
+      .post('https://backend.wechain.eu/auth/dashboard/signup',data)
       .map(res => res.json())
       .map((res) => {
       console.log(res)
@@ -34,7 +34,7 @@ export class AuthService {
 
   login(data: any) {
     return this.http
-      .post('http://localhost:8080/auth/dashboard/login',data)
+      .post('https://backend.wechain.eu/auth/dashboard/login',data)
       .map(res => res.json())
       .map((res) => {
 
@@ -59,7 +59,7 @@ export class AuthService {
     headers.append('Content-Type', 'application/json');
     headers.append('x-jwt-token', JSON.parse(sessionStorage.getItem("user")).jwt_token);
     return this.http
-    .get('http://localhost:8080/auth/dashboard/validate',{
+    .get('https://backend.wechain.eu/auth/dashboard/validate',{
       withCredentials: true,
       headers
     }).map(res => res.json())

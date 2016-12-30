@@ -8,11 +8,12 @@ import { AuthService } from './auth.service';
 export class ChainService {
   constructor(private http: Http, private authService: AuthService) {}
 
+
   getChains(start: number,end: number, token: string) {
     let headers = new Headers();
     headers.append('x-jwt-token', token);
     return this.http
-      .get('http://localhost:8080/dashboard/chains/'+start+'/'+end,{
+      .get('https://backend.wechain.eu/dashboard/chains/'+start+'/'+end,{
         withCredentials: true,
         headers
       })
@@ -55,10 +56,18 @@ export class ChainService {
     headers.append('isAdvertising', data.isAdvertising);
     headers.append('restricted', data.restricted);
     headers.append('type', data.type);
+
     const formData = new FormData();
+    //let imageData = file.split(',')[1];
+    //let dataType = file.split('.')[0].split(';')[0].split(':')[1];
+    //let binaryImageData = atob(imageData);
+    //let blob = new Blob([binaryImageData], { type: dataType });
+    //console.log(blob)
+    //console.log(dataType)
+    //formData.append("Image", blob,"picture.png");
     formData.append("Image", file);
     return this.http
-      .post('http://localhost:8080/dashboard/chains',formData,{
+      .post('https://backend.wechain.eu/dashboard/chains',formData,{
         withCredentials: true,
         headers
       })
@@ -73,7 +82,7 @@ export class ChainService {
     headers.append('Content-Type', 'application/json');
     headers.append('x-jwt-token', this.authService.token());
 
-    let url = `http://localhost:8080/dashboard/chains/${ path }`;
+    let url = `https://backend.wechain.eu/dashboard/chains/${ path }`;
     return this.http.get(url,{
       withCredentials: true,
       headers
@@ -84,7 +93,7 @@ export class ChainService {
     let params = new URLSearchParams();
     //params.set('per_page', '100');
 
-    let url = `http://localhost:8080/v3/chains/${ path }`;
+    let url = `https://backend.wechain.eu/v3/chains/${ path }`;
     return this.http.put(url,data)
       .map((res) => res.json());
   }
@@ -93,8 +102,9 @@ export class ChainService {
     let params = new URLSearchParams();
     //params.set('per_page', '100');
 
-    let url = `http://localhost:8080/v3/chains/${ path }`;
+    let url = `https://backend.wechain.eu/v3/chains/${ path }`;
     return this.http.delete(url)
       .map((res) => res.json());
   }
+
 }

@@ -20,6 +20,7 @@ import {ImageCropperComponent, CropperSettings} from 'ng2-img-cropper';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
+import { Ng2Bs3ModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
 import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 import {ToasterModule, ToasterService} from 'angular2-toaster/angular2-toaster';
@@ -50,6 +51,7 @@ import {FacebookService, FacebookLoginResponse} from 'ng2-facebook-sdk';
     HttpModule,
     RouterModule.forRoot(rootRouterConfig, { useHash: true }),
     ModalModule.forRoot(),
+    Ng2Bs3ModalModule, 
     BootstrapModalModule,
     ToasterModule,
     PopoverModule,
