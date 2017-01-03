@@ -69,10 +69,10 @@
 			<img-cropper *ngIf="hasImage" class="col-xs-6" #cropper [image]="data" [settings]="cropperSettings"></img-cropper>
         	<img *ngIf="data.image" id="croppedImage" class="col-xs-6" [src]="data.image">
 		</div>
-		<h3 class="display-6 text-xs-center col-xs-12" style="color:#315A7B;text-align:center;"><b>OR</b></h3>
+		<!-- <h3 class="display-6 text-xs-center col-xs-12" style="color:#315A7B;text-align:center;"><b>OR</b></h3>
 		<div class="col-xs-8 offset-xs-2" style="border:3px dashed #979797;text-align:center;padding-top:3em;padding-bottom:3em;">
 			<h4 class="display-5 text-xs-center col-xs-12" style="color:#315A7B;text-align:center;">Take picture through computer/tablet/smartphone</h4>
-		</div>
+		</div> -->
 		<div class="col-xs-2">
 		</div>
 		<br/>
@@ -223,15 +223,11 @@
 		<!-- <p class="lead  text-xs-center col-xs-12">
 		  <b>Upload</b> the first picture of your chain
 		</p> -->
-		<div class="col-xs-5" style="border:3px dashed #979797;text-align:center;padding-top:3em;padding-bottom:3em;" contentEditable>
-			<p class="text-muted lead text-xs-left col-xs-12" style="color:#315A7B;">
-			  Copy/Paste emails separated by commas
-			</p>
+		<div class="col-xs-5 text-muted lead text-xs-left " style="border:3px dashed #979797;text-align:center;padding-top:3em;padding-bottom:3em;color:#315A7B;" contentEditable="true" [textContent]="mails" (input)="mails=$event.target.textContent">
+			Copy/Paste emails separated by commas
 		</div>
-		<div class="col-xs-5 offset-xs-2" style="border:3px dashed #979797;text-align:center;padding-top:3em;padding-bottom:3em;" contentEditable>
-			<p class="text-muted lead text-xs-left col-xs-12" style="color:#315A7B;">
-			  Copy/Paste phone numbers (format +33 6/7 XX XX XX XX) separated by commas
-			</p>
+		<div class="col-xs-5 offset-xs-2 text-muted lead text-xs-left " style="border:3px dashed #979797;text-align:center;padding-top:3em;padding-bottom:3em;color:#315A7B;" contentEditable="true" [textContent]="sms" (input)="sms=$event.target.textContent">
+			Copy/Paste phone numbers (format +33 6/7 XX XX XX XX) separated by commas
 		</div>
 		<div class="col-xs-12">
 			<br/>

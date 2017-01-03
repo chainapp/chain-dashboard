@@ -16,6 +16,8 @@ app.use(bodyParser.urlencoded({ extended: true}));
 app.use(compression());	
 
 // routes ======================================================================
+app.use(express.static(path.join(__dirname, '/')));
+app.use(express.static(path.join(__dirname, 'dist')));
 app.use(express.static(path.join(__dirname, 'src')));
 
 app.use(function(err, req, res, next) {

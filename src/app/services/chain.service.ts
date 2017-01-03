@@ -77,6 +77,26 @@ export class ChainService {
       });
   }
 
+  invite(chainId, sms, mails, token) {
+    let headers = new Headers();
+    headers.append('x-jwt-token', token);
+    headers.append('Content-Type', "application/json");
+
+    let body = {
+      sms: sms,
+      mails: mails
+    }
+    return this.http
+      .post('https://backend.wechain.eu/dashboard/chains/'+chainId+'/invite',body,{
+        withCredentials: true,
+        headers
+      })
+      .map(res => res.json())
+      .map((res) => {
+        return res;
+      });
+  }
+
   private makeGetRequest(path: string) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');

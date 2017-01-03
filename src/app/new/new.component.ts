@@ -19,6 +19,8 @@ export class NewComponent {
 		isAdvertising: false,
 		restricted: false
 	};
+	sms: any = "Copy/Paste phone numbers (format 336/7XXXXXXXX) separated by commas";
+	mails: any = "Copy/Paste emails separated by commas";
 	data: any;
     cropperSettings: CropperSettings;
     @ViewChild('cropper', undefined) 
@@ -67,12 +69,23 @@ export class NewComponent {
 	  }
 
 	createChain(){
-	 console.log(this.data)
+	 console.log(this.data);
+	 console.log(this.sms);
+	 console.log(this.mails);
 	 var croppedImage = this.element.nativeElement.querySelector('#croppedImage');
 
 		this.chainService.createChain(this.chain,this.file,this.authService.token()).subscribe(
 	        res => {
 	          this.chain._id = res._id;
+	          this.chainService.invite(this.chain._id,this.sms.replace(/ /g, "").split(','),this.mails.replace(/ /g, "").split(','),this.authService.token()).subscribe(
+	          	res => {
+		          console.log(res);
+		        },
+		        err => {
+		        	//var message = JSON.parse(err._body).message
+		            this.toasterService.pop('error', 'Error', 'Error occured during chain creation. Please try again.');
+		        }
+	          )
 	        },
 	        err => {
 	        	//var message = JSON.parse(err._body).message
