@@ -16,8 +16,9 @@ export class NewComponent {
 		title: null,
 		type: "PUBLIC",
 		event_type: "Party",
+		event_type_other: null,
 		isAdvertising: false,
-		restricted: false
+		restricted: null
 	};
 	sms: any = "Copy/Paste phone numbers (format 336/7XXXXXXXX) separated by commas";
 	mails: any = "Copy/Paste emails separated by commas";
@@ -103,5 +104,17 @@ export class NewComponent {
 	      event.preventDefault();
 	    }
 	}
+
+	 emptySMS() {
+  		this.sms = null;
+	  }
+
+	  emptyMails() {
+  		this.mails = null;
+	  }
+
+	 initRestricted(){
+	 	this.chain.restricted = false
+	 }
 
 }

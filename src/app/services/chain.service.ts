@@ -43,8 +43,18 @@ export class ChainService {
     return this.makeGetRequest(`${chainId}/refuse/${chainerId}`);
   }
 
-  deleteChainer(chainId: string,chainerId: string) {
-    return this.makeGetRequest(`${chainId}/chainer/${chainerId}`);
+  deleteChainer(chainId: string,chainerId: string, token: string) {
+    let headers = new Headers();
+    headers.append('x-jwt-token', token);
+    return this.http
+      .delete('https://backend.wechain.eu/dashboard/chains/'+chainId+'/chainer/'+chainerId,{
+        withCredentials: true,
+        headers
+      })
+      .map(res => res.json())
+      .map((res) => {
+        return res;
+      });
   }
 
   createChain(data, file, token) {

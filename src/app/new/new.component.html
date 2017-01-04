@@ -126,12 +126,15 @@
                 Team Building
             </label>
         </div>
-		<form class="form-inline col-xs-12 text-xs-center">
-		  <div class="form-group">
-		    <label for="exampleInputName2">Other</label>
-		    <input type="text" class="form-control" id="exampleInputName2" name="event_type" placeholder="Jane Doe" [(ngModel)]="chain.event_type">
-		  </div>
-		</form>
+        <div class="radio col-xs-6 offset-xs-3">
+            <label style="font-size: 2em;color:#315A7B;">
+                <input type="radio" name="o5" value="Other" [(ngModel)]="chain.event_type">
+                <span class="cr" style="color:#3BA4F7;"><i class="cr-icon fa fa-circle" style="color:#3BA4F7;"></i></span>
+                Other <input type="text" class="form-control" id="exampleInputName2" name="event_type" placeholder="Birthday, ..." [(ngModel)]="chain.event_type_other">
+            </label>
+        </div>
+        <div class="radio col-xs-12">
+        </div>	
 		<br/>
 		<button class="btn btn-lg pull-left col-xs-1"  type="button" (click)="back(2)">Previous</button>
 		<button class="btn btn-lg pull-right col-xs-1 offset-xs-10"  type="button" (click)="next(2)">Next</button>
@@ -170,7 +173,7 @@
         </div>
         <div class="radio col-xs-6 offset-xs-3">
             <label style="font-size: 2em;color:#315A7B;">
-                <input type="radio" name="type" value="PRIVATE" [(ngModel)]="chain.type">
+                <input type="radio" name="type" value="PRIVATE" [(ngModel)]="chain.type" (click)="initRestricted();">
                 <span class="cr" style="color:#3BA4F7;"><i class="cr-icon fa fa-circle" style="color:#3BA4F7;"></i></span>
                 My guests only
                 <p class="lead text-xs-left col-xs-12" style="color:#315A7B;">
@@ -223,10 +226,10 @@
 		<!-- <p class="lead  text-xs-center col-xs-12">
 		  <b>Upload</b> the first picture of your chain
 		</p> -->
-		<div class="col-xs-5 text-muted lead text-xs-left " style="border:3px dashed #979797;text-align:center;padding-top:3em;padding-bottom:3em;color:#315A7B;" contentEditable="true" [textContent]="mails" (input)="mails=$event.target.textContent">
+		<div class="col-xs-5 text-muted lead text-xs-left " style="border:3px dashed #979797;text-align:center;padding-top:3em;padding-bottom:3em;color:#315A7B;" contentEditable="true" [textContent]="mails" (input)="mails=$event.target.textContent" (focus)="emptyMails();">
 			Copy/Paste emails separated by commas
 		</div>
-		<div class="col-xs-5 offset-xs-2 text-muted lead text-xs-left " style="border:3px dashed #979797;text-align:center;padding-top:3em;padding-bottom:3em;color:#315A7B;" contentEditable="true" [textContent]="sms" (input)="sms=$event.target.textContent">
+		<div class="col-xs-5 offset-xs-2 text-muted lead text-xs-left " style="border:3px dashed #979797;text-align:center;padding-top:3em;padding-bottom:3em;color:#315A7B;" contentEditable="true" [textContent]="sms" (input)="sms=$event.target.textContent" (click)="emptySMS();">
 			Copy/Paste phone numbers (format +33 6/7 XX XX XX XX) separated by commas
 		</div>
 		<div class="col-xs-12">

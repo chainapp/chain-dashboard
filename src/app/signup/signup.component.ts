@@ -71,9 +71,9 @@ export class SignupComponent {
 		this.authService.signup(data).subscribe(
 	        res => {
 	          console.log(res);
-	          this.authService.setProfilePic(this.file).subscribe(
-	          	res => {
-	          		this.toasterService.pop('success', 'Welcome !', 'Welcome on WeChain '+res.username+' !');          
+	          this.toasterService.pop('success', 'Welcome !', 'Welcome on WeChain '+res.username+' !'); 
+	          this.authService.setProfilePic(this.file, this.authService.token()).subscribe(
+	          	res => {	          		         
 	          		this.router.navigate(['/home']);
 	          	},
 	          	err => {
@@ -89,13 +89,10 @@ export class SignupComponent {
 	}
 
 	passwordMatchValidator(g: FormGroup) {
-		console.log(g.value)
-		console.log("in password match")
 	   return (g.get('password').value.length >= 6 && (g.get('password').value === g.get('confirmpassword').value))
 	      ? null : {'mismatch': true};
 	}
 	orgaOrPersonValidator(g: FormGroup) {
-		console.log("in orga or person match")
 	   return ((g.get('organization').value === true && g.get('organization_name').value.length > 0)
 	   		|| (g.get('organization').value === false && g.get('firstname').value.length > 0 && g.get('lastname').value.length > 0))
 	      ? null : {'mismatch': true};

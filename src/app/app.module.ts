@@ -62,7 +62,7 @@ import {FacebookService, FacebookLoginResponse} from 'ng2-facebook-sdk';
     FacebookService,
     ChainService,
     AuthService,
-    AuthGuard 
+    AuthGuard
   ],
   bootstrap: [ AppComponent ]
 })

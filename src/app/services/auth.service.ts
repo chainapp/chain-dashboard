@@ -22,10 +22,14 @@ export class AuthService {
         console.log("in status 201")  
           this.loggedIn = true;
           this.user = res;
+          sessionStorage.setItem("user", JSON.stringify(this.user));
+          sessionStorage.setItem("loggedIn",true.toString());
         }else{
         console.log("not in right status")
           this.loggedIn = false;
           this.user = null;
+          sessionStorage.removeItem("user");
+          sessionStorage.setItem("loggedIn",false.toString());
         }
 
         return res;
@@ -85,9 +89,9 @@ export class AuthService {
     return this.user;
   }
 
-  setProfilePic(file) {
+  setProfilePic(file, token) {
     let headers = new Headers();
-    headers.append('x-jwt-token', JSON.parse(sessionStorage.getItem("user")).jwt_token);
+    headers.append('x-jwt-token', token);
     const formData = new FormData();
     formData.append("profilePicture", file);
     return this.http

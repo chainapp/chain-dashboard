@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewContainerRef, ViewEncapsulation, ViewChild } from '@angular/core';
 import {ChainService} from '../services/chain.service';
 import {AuthService} from '../services/auth.service';
+import {SocketService} from '../services/socket.service';
 import {Observable} from 'rxjs/Observable';
 import {ActivatedRoute} from '@angular/router';
 import { Overlay } from 'angular2-modal';
@@ -9,6 +10,7 @@ import {ToasterContainerComponent, ToasterService} from 'angular2-toaster/angula
 import {PopoverModule} from "ng2-popover";
 import { UiSwitchModule } from 'angular2-ui-switch'
 import { ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
+import * as io from 'socket.io-client';
 
 @Component({
   selector: 'chain',
@@ -21,6 +23,8 @@ export class ChainComponent implements OnInit {
   public chain:any = {};
   public loaded:boolean = false;
   private toasterService: ToasterService;
+  connectionFullStream;
+  connectionModeration;
   
   @ViewChild('approvalModal')
   approvalModal: ModalComponent;
@@ -31,9 +35,16 @@ export class ChainComponent implements OnInit {
   @ViewChild('deleteModal')
   deleteModal: ModalComponent;
 
+  private url = 'https://backend.wechain.eu';  
+  private fullStreamSocket;
+  private moderationSocket;
+
+
   constructor(public chainService: ChainService, private route: ActivatedRoute, overlay: Overlay, vcRef: ViewContainerRef, public modal: Modal, toasterService: ToasterService, private authService: AuthService) {
      overlay.defaultViewContainer = vcRef;
-     this.toasterService = toasterService; 
+     this.toasterService = toasterService;
+     this.chain.chainers = [];
+     this.chain.moderation = [];
   }
 
   ngOnInit() {
@@ -42,6 +53,72 @@ export class ChainComponent implements OnInit {
       this.chainId = params['chainId'];
       if (this.chainId) {
         this.init(this.chainId);
+
+        this.chain.chainers = [];
+        this.chain.moderation = [];
+
+        this.fullStreamSocket = io(this.url);
+        let fullstream = {
+          chunks_size : 200,
+          delay : 10,
+          stream : this.chainId+"_full_stream"
+        }
+        this.fullStreamSocket.emit('join', this.chainId+"_full_stream");
+        this.fullStreamSocket.emit('init', fullstream);
+        this.fullStreamSocket.on('data', (data) => {
+          console.log("fullstream socket has received data event");
+          this.chain.chainers = [];
+          for (var i = 0 ; i < data.length; i++){
+            if (i % 2 == 0){
+              var chainer = JSON.parse(data[i]);
+              this.chain.chainers.push(chainer);
+            }
+          }
+        })
+        this.fullStreamSocket.on('new_picture', (data) => {
+          console.log("fullstream socket has received new_picture event");
+          this.chain.chainers.push(data);
+        })
+        this.fullStreamSocket.on('delete_picture', (data) => {
+          console.log("fullstream socket has received delete_picture event");
+          for (var i = 0 ; i < this.chain.chainers.length ; i++){
+            if (data._id == this.chain.chainers[i]._id){
+              this.chain.chainers.splice(i,1);
+            }
+          }
+        })
+
+
+        this.moderationSocket = io(this.url);
+        let moderation = {
+          chunks_size : 200,
+          delay : 10,
+          stream : this.chainId+"_moderation"
+        }
+        this.moderationSocket.emit('join', this.chainId+"_moderation");
+        this.moderationSocket.emit('init', moderation);
+        this.moderationSocket.on('data', (data) => {
+          console.log("moderation socket has received data event")
+          this.chain.moderation = [];
+          for (var i = 0 ; i < data.length; i++){
+            if (i % 2 == 0){
+              var chainer = JSON.parse(data[i]);
+              this.chain.moderation.push(chainer);
+            }
+          }
+        })
+        this.moderationSocket.on('new_picture', (data) => {
+          console.log("moderation socket has received new_picture event")
+          this.chain.moderation.push(data);
+        })
+        this.moderationSocket.on('delete_picture', (data) => {
+          console.log("fullstream socket has received delete_picture event");
+          for (var i = 0 ; i < this.chain.moderation.length ; i++){
+            if (data._id == this.chain.moderation[i]._id){
+              this.chain.moderation.splice(i,1);
+            }
+          }
+        })
       }
     });
   }
@@ -88,7 +165,7 @@ export class ChainComponent implements OnInit {
   approveConfirmed(chainer:any){
     this.chainService.approve(this.chain._id,chainer._id)
     .subscribe(_ => {
-      this.init(this.chain._id);
+      //this.init(this.chain._id);
       this.toasterService.pop('success', 'Picture approved', 'Picture from '+chainer.username+' has been successfully approved');
       this.approvalModal.close();
     })
@@ -107,7 +184,7 @@ export class ChainComponent implements OnInit {
   refuseConfirmed(chainer:any){
     this.chainService.refuse(this.chain._id,chainer._id)
     .subscribe(_ => {
-      this.init(this.chain._id);
+      //this.init(this.chain._id);
       this.toasterService.pop('success', 'Picture refused', 'Picture from '+chainer.username+' has been successfully refused');
       this.refusalModal.close();
     })
@@ -124,9 +201,9 @@ export class ChainComponent implements OnInit {
   }
 
   deleteConfirmed(chainer: any){
-    this.chainService.deleteChainer(this.chain._id,chainer._id)
+    this.chainService.deleteChainer(this.chain._id,chainer._id, this.authService.token())
     .subscribe(_ => {
-      this.init(this.chain._id);
+      //this.init(this.chain._id);
       this.toasterService.pop('success', 'Picture deleted', 'Picture from '+chainer.username+' has been successfully deleted');
       this.displayModal.close();
       this.deleteModal.close();
@@ -136,5 +213,14 @@ export class ChainComponent implements OnInit {
    delete(chainer:any){
     this.selectedChainer = chainer;
     this.deleteModal.open();
+  }
+
+
+  compareChainers(a,b) {
+    if (a.created_at < b.created_at)
+      return -1;
+    if (a.created_at > b.created_at)
+      return 1;
+    return 0;
   }
 }
