@@ -37,10 +37,28 @@
 			  </div> -->
 		      <div class="card-block text-xs-center">
 		        <a href="https://live.wechain.eu/{{chain._id}}" target="_blank" class="btn btn-danger btn-sm"><i class="fa fa-video-camera" aria-hidden="true"></i> &nbsp; Broadcast Live</a>
-		        <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-user-plus" aria-hidden="true"></i> &nbsp; Invite More</a>
+		        <a href="#" class="btn btn-primary btn-sm" (click)="inviteMore(chain);"><i class="fa fa-user-plus" aria-hidden="true"></i> &nbsp; Invite More</a>
 		      </div>
 	    </div>
 	  </div>
 	<!-- </div> -->
 </div>
-
+<modal #inviteModal>
+    <modal-header>
+        <h4 class="modal-title">Invite people to the chain #{{selectedChain.title}} ?</h4>
+    </modal-header>
+    <modal-body class="col-xs-12">
+		<div class="col-xs-12 text-muted lead text-xs-left " style="border:3px dashed #979797;text-align:center;padding-top:3em;padding-bottom:3em;color:#315A7B;" contentEditable="true" [textContent]="mails" (input)="mails=$event.target.textContent" (focus)="emptyMails();">
+			Copy/Paste emails separated by commas
+		</div>
+		<div class="col-xs-12">
+		</div>
+		<div class="col-xs-12 text-muted lead text-xs-left " style="border:3px dashed #979797;text-align:center;padding-top:3em;padding-bottom:3em;color:#315A7B;" contentEditable="true" [textContent]="sms" (input)="sms=$event.target.textContent" (click)="emptySMS();">
+			Copy/Paste phone numbers (format +33 6/7 XX XX XX XX) separated by commas
+		</div>
+    </modal-body>
+    <modal-footer>
+        <button type="button" class="btn btn-default" data-dismiss="deleteModal" (click)="refuseInviteMore();">No, keep</button>
+        <button type="button" class="btn btn-success" (click)="confirmInviteMore(selectedChainer);">Invite !</button>
+    </modal-footer>
+</modal>
