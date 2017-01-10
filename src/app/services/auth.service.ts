@@ -58,6 +58,14 @@ export class AuthService {
       });
   }
 
+  logout() {
+    this.loggedIn = false;
+    this.user = null;
+    sessionStorage.removeItem("user");
+    sessionStorage.setItem("loggedIn",false.toString());
+    return true;
+  }
+
   valid() {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -86,7 +94,7 @@ export class AuthService {
   }
 
   getUser() {
-    return this.user;
+    return JSON.parse(sessionStorage.getItem("user"));
   }
 
   setProfilePic(file, token) {

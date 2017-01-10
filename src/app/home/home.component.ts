@@ -35,7 +35,7 @@ export class HomeComponent {
 	    	console.log(chains)
             this.chains = chains;
           });
-	 }
+	 }  
 
 	 loadMore(){
 	 	this.chain.getChains(this.chains.length,this.chains.length+10, this.authService.token())
@@ -86,11 +86,15 @@ export class HomeComponent {
 
 
 	 emptySMS() {
-  		this.sms = null;
+  		if (this.sms == "Copy/Paste phone numbers (format 336/7XXXXXXXX) separated by commas"){
+  			this.sms = null;
+  		}
 	  }
 
 	  emptyMails() {
-  		this.mails = null;
+	  	if (this.mails == "Copy/Paste emails separated by commas"){
+  			this.mails = null;
+  		}
 	  }
 	
 }

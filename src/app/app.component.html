@@ -1,3 +1,8 @@
+<script type="text/javascript">
+  $(function () {
+    $('[data-toggle="popover"]').popover()
+  })
+</script>
 <nav class="navbar navbar-light bg-faded" style="background-color:#315A7B;">
   <a class="navbar-brand" [routerLink]="['/home']">
     <img src="/logo_green.png" height="38" alt="">
@@ -5,10 +10,17 @@
   <form class="form-inline float-xs-right">
     <input class="form-control" type="text" placeholder="Search in chains..." name="search" *ngIf="authService.isLoggedIn()" [(ngModel)]="searchstring" (ngModelChange)="emit();">
     <button [routerLink]="['/new']" class="btn btn-outline-wechain" type="submit" *ngIf="authService.isLoggedIn()">CREATE NEW CHAIN</button>
-    <img [src]="authService.getUser().profilePicture || 'https://s3-eu-west-1.amazonaws.com/chainappbucket-logos/profile.png'" height="38" alt="" *ngIf="authService.isLoggedIn()">
+    <img [src]="authService.getUser().profilePicture || 'https://s3-eu-west-1.amazonaws.com/chainappbucket-logos/profile.png'" height="38" alt="" *ngIf="authService.isLoggedIn()" [popover]="profile" [popoverOnHover]="true"  [popoverCloseOnMouseOutside]="true">
   </form>
 </nav>
-
+<popover-content  #profile 
+      placement="bottom"
+      [closeOnMouseOutside]="true">
+    <div *ngIf="authService.isLoggedIn()" class="row">
+      <span class="col-sm-12"><h5 class="display-5 text-xs-center col-xs-12" style="color:#315A7B;">{{authService.getUser().username}}</h5></span>
+      <button class="col-sm-10 offset-sm-1 btn btn-danger" (click)="logout()">Logout</button>
+  </div>
+</popover-content>
 
 <main class="container-fluid" style="padding-top:20px;">
 	 <router-outlet></router-outlet>

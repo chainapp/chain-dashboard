@@ -34,10 +34,15 @@ export class ChainComponent implements OnInit {
   displayModal: ModalComponent;
   @ViewChild('deleteModal')
   deleteModal: ModalComponent;
+  @ViewChild('inviteModal')
+  inviteModal: ModalComponent;
 
   private url = 'https://backend.wechain.eu';  
   private fullStreamSocket;
   private moderationSocket;
+
+  sms: any = "Copy/Paste phone numbers (format 336/7XXXXXXXX) separated by commas";
+  mails: any = "Copy/Paste emails separated by commas";
 
 
   constructor(public chainService: ChainService, private route: ActivatedRoute, overlay: Overlay, vcRef: ViewContainerRef, public modal: Modal, toasterService: ToasterService, private authService: AuthService) {
@@ -210,9 +215,49 @@ export class ChainComponent implements OnInit {
     })
   }
 
-   delete(chainer:any){
+  delete(chainer:any){
     this.selectedChainer = chainer;
     this.deleteModal.open();
+  }
+
+  inviteMore(){
+    this.inviteModal.open();
+   }
+
+  confirmInviteMore(){
+    this.chainService.invite(this.chain._id,(this.sms ? this.sms.replace(/ /g, "").split(',') : []),(this.mails ? this.mails.replace(/ /g, "").split(',') : []),this.authService.token())
+    .subscribe( res => {
+        console.log(res);
+        this.inviteModal.close();
+        this.toasterService.pop('success', 'Invites sent', 'Your invites have been sent !');
+        this.sms = "Copy/Paste phone numbers (format 336/7XXXXXXXX) separated by commas";
+        this.mails = "Copy/Paste emails separated by commas";
+      },
+      err => {
+          this.inviteModal.close();
+          this.toasterService.pop('error', 'Error', 'Error occured during invitations. Please try again.');
+          this.sms = "Copy/Paste phone numbers (format 336/7XXXXXXXX) separated by commas";
+          this.mails = "Copy/Paste emails separated by commas";
+      }
+    )
+  }
+
+  refuseInviteMore(){
+    this.inviteModal.close();
+    this.sms = "Copy/Paste phone numbers (format 336/7XXXXXXXX) separated by commas";
+    this.mails = "Copy/Paste emails separated by commas";
+   }
+
+  emptySMS() {
+    if (this.sms == "Copy/Paste phone numbers (format 336/7XXXXXXXX) separated by commas"){
+      this.sms = null;
+    }
+  }
+
+  emptyMails() {
+    if (this.mails == "Copy/Paste emails separated by commas"){
+      this.mails = null;
+    }
   }
 
 

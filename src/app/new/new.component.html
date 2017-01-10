@@ -335,7 +335,7 @@
 		  Chain <b style="color:#3BA4F7;">#{{chain.title}}</b> has been launched
 		</p>
 		<div class="col-xs-12 text-xs-center">
-			<button class="btn btn-lg btn-success"  type="button" [routerLink]="['/chains/'+chain._id]">SEE MY CHAIN</button>
+			<button class="btn btn-lg btn-success"  type="button" [routerLink]="['/chains/'+chain._id]" [disabled]="!chainOK">SEE MY CHAIN</button>
 		</div>
 	</div>
 </div>

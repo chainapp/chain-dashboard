@@ -20,6 +20,7 @@ export class NewComponent {
 		isAdvertising: false,
 		restricted: null
 	};
+	chainOK = false;
 	sms: any = "Copy/Paste phone numbers (format 336/7XXXXXXXX) separated by commas";
 	mails: any = "Copy/Paste emails separated by commas";
 	data: any;
@@ -78,6 +79,7 @@ export class NewComponent {
 		this.chainService.createChain(this.chain,this.file,this.authService.token()).subscribe(
 	        res => {
 	          this.chain._id = res._id;
+	          this.chainOK = true;
 	          this.chainService.invite(this.chain._id,this.sms.replace(/ /g, "").split(','),this.mails.replace(/ /g, "").split(','),this.authService.token()).subscribe(
 	          	res => {
 		          console.log(res);
@@ -106,11 +108,15 @@ export class NewComponent {
 	}
 
 	 emptySMS() {
-  		this.sms = null;
+  		if (this.sms == "Copy/Paste phone numbers (format 336/7XXXXXXXX) separated by commas"){
+  			this.sms = null;
+  		}
 	  }
 
 	  emptyMails() {
-  		this.mails = null;
+	  	if (this.mails == "Copy/Paste emails separated by commas"){
+  			this.mails = null;
+  		}
 	  }
 
 	 initRestricted(){
