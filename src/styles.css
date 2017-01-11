@@ -20,7 +20,21 @@
 .btn-outline-wechain.disabled:hover,.btn-outline-wechain:disabled:hover
 {border-color:#CCFAF4}
 
-
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 30px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 30px;
+}
 
 .hovereffect {
   float: left;

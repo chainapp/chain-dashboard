@@ -162,6 +162,13 @@ export class ChainComponent implements OnInit {
     })
   }
 
+  toggleQR(){
+    this.chainService.toggleQR(this.chain._id)
+    .subscribe(chain => {
+      this.chain.display_qrcode = chain.display_qrcode;
+    })
+  }
+
   approve(chainer:any){
     this.selectedChainer = chainer
     this.approvalModal.open();

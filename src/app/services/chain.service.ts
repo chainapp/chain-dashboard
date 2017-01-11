@@ -35,6 +35,10 @@ export class ChainService {
     return this.makePutRequest(`${chainId}/toggleModeration`,{});
   }
 
+  toggleQR(chainId: string) {
+    return this.makePutRequest(`${chainId}/toggleQR`,{});
+  }
+
   approve(chainId: string,chainerId: string) {
     return this.makeGetRequest(`${chainId}/approve/${chainerId}`);
   }
@@ -120,12 +124,15 @@ export class ChainService {
   }
 
   private makePutRequest(path: string, data: any) {
-    let params = new URLSearchParams();
-    //params.set('per_page', '100');
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('x-jwt-token', this.authService.token());
 
-    let url = `https://backend.wechain.eu/v3/chains/${ path }`;
-    return this.http.put(url,data)
-      .map((res) => res.json());
+    let url = `https://backend.wechain.eu/dashboard/chains/${ path }`;
+    return this.http.put(url,data,{
+      withCredentials: true,
+      headers
+    }).map((res) => res.json());
   }
 
   private makeDeleteRequest(path: string) {
