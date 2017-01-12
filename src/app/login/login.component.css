@@ -135,10 +135,8 @@ div.currentdivider span.currentdivider {
 {color:white;background-color:#6d84b4;border-color:#6d84b4}
 
 .btn-facebook.focus,.btn-facebook:focus
-{color:white;background-color:#00EACB;border-color:#3b5998}
+{color:white;background-color:#6d84b4;border-color:#6d84b4}
 
-.btn-facebook.active,.btn-facebook:active,.open>.btn-facebook.dropdown-toggle
-{color:white;background-color:#3b5998;border-color:#3b5998}
 
 
 .btn-wechain

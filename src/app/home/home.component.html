@@ -9,6 +9,10 @@
 	</div>
 	<!-- <div *ngIf="chains.length != 0" class="card-deck-wrapper"> -->
 	  <div *ngIf="chains.length != 0" class="container-fluid">
+	  	<div class="col-xs-12 col-md-12 flex-xs-middle flex-md-middle">
+	  		 <h5 class="lead col-sm-12 ">Displaying your last {{chains.length}} chains &nbsp;<button (click)="loadMore();" class="btn btn-wechain" type="submit">Load more chains</button></h5>
+	  		 
+	  	</div>
 	    <div *ngFor='let chain of chains' class="card col-xs-4">
 	    	<div class="card-block text-xs-center">
 			    <h5 class="card-title display-5">#{{chain.title}}</h5>

@@ -29,7 +29,7 @@
                 </label>
             </div><br> 
             <div class="form-group" *ngIf="!post.controls.organization.value" >
-                <button type="submit" class="btn btn-facebook btn-lg btn-block"><i class="fa fa-facebook-official" aria-hidden="true"></i>&nbsp;Signup with Facebook</button>
+                <button (click)="onFacebookLoginClick();" class="btn btn-facebook btn-lg btn-block"><i class="fa fa-facebook-official" aria-hidden="true"></i>&nbsp;Signup with Facebook</button>
             </div>
             <div class="col-xs-12" *ngIf="!post.controls.organization.value">
                 <div class="divider">

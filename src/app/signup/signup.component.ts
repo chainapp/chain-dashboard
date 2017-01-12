@@ -9,6 +9,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import {ToasterContainerComponent, ToasterService} from 'angular2-toaster/angular2-toaster';
 import { Overlay } from 'angular2-modal';
 import { Modal } from 'angular2-modal/plugins/bootstrap';
+declare const FB:any;
 
 @Component({
   selector: 'signup',
@@ -50,6 +51,12 @@ export class SignupComponent {
         this.cropperSettings.canvasHeight = 200;
         this.data = {};
 	}
+
+	ngOnInit() {
+		FB.getLoginStatus(response => {
+            this.statusChangeCallback(response);
+        });
+	 }
 
 	fileChangeListener($event) {
 		this.hasImage = true;
@@ -97,6 +104,32 @@ export class SignupComponent {
 	   		|| (g.get('organization').value === false && g.get('firstname').value.length > 0 && g.get('lastname').value.length > 0))
 	      ? null : {'mismatch': true};
 	}
+
+	onFacebookLoginClick() {
+        FB.login();
+    }
+
+    statusChangeCallback(resp) {
+        if (resp.status === 'connected') {
+            this.authService.fbLogin(resp.authResponse.accessToken).subscribe(
+		        res => {
+		          console.log("after fbLogin from service auth")
+		          console.log(res);
+		          console.log(this.authService.isLoggedIn());
+		          this.toasterService.pop('success', 'Login successful', 'Hello '+res.username+', welcome back on WeChain !');
+		          this.router.navigate(['/home']);
+		        },
+		        err => {
+		        	var message = JSON.parse(err._body).message
+		            this.toasterService.pop('error', 'Error', 'Error occured during login process: '+message);
+		        }
+		    );
+        }else if (resp.status === 'not_authorized') {
+             console.log(resp)
+        }else {
+             console.log(resp)
+        }
+    };
 	
 
 }

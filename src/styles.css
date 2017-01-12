@@ -20,6 +20,16 @@
 .btn-outline-wechain.disabled:hover,.btn-outline-wechain:disabled:hover
 {border-color:#CCFAF4}
 
+/*GENERAL*/
+.btn-wechain
+{color:white;background-color:#00EACB;border-color:#00EACB}
+
+.btn-wechain:hover
+{color:white;background-color:#00D2B6;border-color:#00D2B6}
+
+.btn-wechain.focus,.btn-wechain:focus
+{color:white;background-color:#00D2B6;border-color:#00D2B6}
+
 html {
   position: relative;
   min-height: 100%;

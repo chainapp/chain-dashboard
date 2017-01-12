@@ -24,12 +24,14 @@ export class AuthService {
           this.user = res;
           sessionStorage.setItem("user", JSON.stringify(this.user));
           sessionStorage.setItem("loggedIn",true.toString());
+          sessionStorage.setItem("authType","local");
         }else{
         console.log("not in right status")
           this.loggedIn = false;
           this.user = null;
           sessionStorage.removeItem("user");
-          sessionStorage.setItem("loggedIn",false.toString());
+          sessionStorage.removeItem("loggedIn");
+          sessionStorage.removeItem("authType");
         }
 
         return res;
@@ -47,11 +49,45 @@ export class AuthService {
           this.user = res;
           sessionStorage.setItem("user", JSON.stringify(this.user));
           sessionStorage.setItem("loggedIn",true.toString());
+          sessionStorage.setItem("authType","local");
         }else{
           this.loggedIn = false;
           this.user = null;
           sessionStorage.removeItem("user");
-          sessionStorage.setItem("loggedIn",false.toString());
+          sessionStorage.removeItem("loggedIn");
+          sessionStorage.removeItem("authType");
+        }
+
+        return res;
+      });
+  }
+
+  fbLogin(token: string) {
+    var data = {
+      access_token: token,
+      os: "Desktop",
+      os_version: "N/A",
+      app_version: "Dashboard",
+      model: "Desktop",
+      token: null
+    }
+    return this.http
+      .post('https://backend.wechain.eu/auth/dashboard/facebook/token',data)
+      .map(res => res.json())
+      .map((res) => {
+
+        if (res._id && res._id != null) {         
+          this.loggedIn = true;
+          this.user = res;
+          sessionStorage.setItem("user", JSON.stringify(this.user));
+          sessionStorage.setItem("loggedIn",true.toString());
+          sessionStorage.setItem("authType","facebook");
+        }else{
+          this.loggedIn = false;
+          this.user = null;
+          sessionStorage.removeItem("user");
+          sessionStorage.removeItem("loggedIn");
+          sessionStorage.removeItem("authType");
         }
 
         return res;
@@ -62,7 +98,8 @@ export class AuthService {
     this.loggedIn = false;
     this.user = null;
     sessionStorage.removeItem("user");
-    sessionStorage.setItem("loggedIn",false.toString());
+    sessionStorage.removeItem("loggedIn");
+    sessionStorage.removeItem("authType");
     return true;
   }
 
@@ -91,6 +128,10 @@ export class AuthService {
 
   isLoggedIn() {
     return (sessionStorage.getItem("loggedIn") === 'true');
+  }
+
+  authType() {
+    return sessionStorage.getItem("authType");
   }
 
   getUser() {
